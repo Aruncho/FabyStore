@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- ==========================================
+         OPEN GRAPH — Estas etiquetas son las que
+         lee WhatsApp, Instagram, Telegram, etc.
+         para construir la vista previa del enlace.
+    =========================================== -->
+
+    {% if zapato %}
+
+    <!-- Título que aparece en la preview -->
+    <meta property="og:title" content="{{ zapato.nombre }} — Faby's Store">
+
+    <!-- Descripción debajo del título -->
+    <meta property="og:description"
+        content="{% if zapato.marcas %}{{ zapato.marcas }} · {% endif %}Disponible en Faby's Store. ¡Escríbenos por WhatsApp!">
+
+    <!-- Imagen que se muestra en la preview -->
+    <meta property="og:image" content="{{ zapato.imagen }}">
+
+    <!-- URL canónica de la página -->
+    <meta property="og:url" content="{{ request.url }}">
+
+    <!-- Tipo de contenido -->
+    <meta property="og:type" content="product">
+
+    <!-- Nombre del sitio -->
+    <meta property="og:site_name" content="Faby's Store">
+
+    <!-- Para Twitter/X también -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ zapato.nombre }} — Faby's Store">
+    <meta name="twitter:image" content="{{ zapato.imagen }}">
+
+    <title>{{ zapato.nombre }} — Faby's Store</title>
+
+    {% else %}
+    <title>Zapato no encontrado — Faby's Store</title>
+    {% endif %}
+
+    <!-- Redirige al usuario humano al catálogo después de 0 segundos -->
+    <!-- El robot de WhatsApp NO sigue redirecciones, solo lee el <head> -->
+    <meta http-equiv="refresh" content="0; url=/catalogo?ver={{ zapato.id }}">
+</head>
+
+<body>
+    <!-- El usuario humano nunca verá esto gracias al refresh de arriba -->
+    {% if zapato %}
+    <p>Redirigiendo al catálogo...</p>
+    {% else %}
+    <p>Zapato no encontrado. <a href="/catalogo">Ir al catálogo</a></p>
+    {% endif %}
+</body>
+
+</html>

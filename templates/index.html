@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faby's Store</title>
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon-32x32.png') }}" type="image/png">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-inner">
+      <a href="{{ url_for('inicio') }}" class="logo">
+        <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="Logo-img" class="logo-img">
+      </a>
+
+      <!-- LINKS CENTRADOS -->
+      <div class="nav-center">
+        <a href="{{ url_for('inicio') }}" class="nav-link active">Inicio</a>
+        <a class="nav-link" href="{{ url_for('catalogo') }}">Catálogo</a>
+        <a href="#contacto" class="nav-link">Contacto</a>
+      </div>
+
+      <!-- ICONS + HAMBURGER -->
+      <div class="nav-right">
+        <!-- Búsqueda -->
+        <form class="search-container" id="searchContainer" action="{{ url_for('catalogo') }}" method="GET">
+          <input type="text" class="search-input" name="q" id="searchInput" placeholder="Buscar...">
+          <button type="submit" class="nav-icon" id="searchIcon"
+            style="background: none; border: none; padding: 0; cursor: pointer;">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </button>
+        </form>
+        <!-- TikTok -->
+        <a href="#" target="_blank" class="nav-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.8">
+            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+          </svg>
+        </a>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/fabysfrkystore.g/" target="_blank" class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+            <circle cx="12" cy="12" r="4" />
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+          </svg>
+        </a>
+        <!-- WhatsApp -->
+        <a href="https://wa.me/584120000000" target="_blank" class="nav-icon">
+          <i class="bi bi-whatsapp"></i>
+        </a>
+      </div>
+
+      <!-- HAMBURGER (mobile) -->
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+
+    <!-- Buscador móvil -->
+    <form class="mobile-search-container" action="{{ url_for('catalogo') }}" method="GET">
+      <input type="text" class="mobile-search-input" name="q" placeholder="Buscar..." required>
+      <button type="submit" class="mobile-search-icon"
+        style="background: none; border: none; padding: 0; cursor: pointer;">
+        <svg viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+      </button>
+    </form>
+
+    <a href="{{ url_for('inicio') }}" class="nav-link active">Inicio</a>
+    <a class="nav-link" href="{{ url_for('catalogo') }}">Catálogo</a>
+    <a href="#contacto" class="nav-link">Contacto</a>
+
+    <div class="mobile-social">
+      <a href="#" target="_blank" class="nav-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+        </svg>
+      </a>
+      <a href="https://www.instagram.com/fabysfrkystore.g/" target="_blank" class="nav-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+          <circle cx="12" cy="12" r="4" />
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+        </svg>
+      </a>
+      <a href="https://wa.me/584120000000" target="_blank" class="nav-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884" />
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Overlay para el menú móvil -->
+  <div id="overlay" class="overlay"></div>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('overlay');
+
+    function toggleMenu() {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      overlay.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    hamburger.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', toggleMenu);
+
+    // Cerrar al hacer click en un link del móvil
+    mobileMenu.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', toggleMenu);
+    });
+
+    // Ocultar/Mostrar Navbar al hacer scroll
+    let lastScrollTop = 0;
+    const navbar = document.querySelector('nav');
+
+    window.addEventListener('scroll', function () {
+      let scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+      if (scrollTop > lastScrollTop && scrollTop > navbar.offsetHeight) {
+        // Scroll hacia abajo y no en el tope
+        navbar.classList.add('nav-hidden');
+      } else {
+        // Scroll hacia arriba o en el tope
+        navbar.classList.remove('nav-hidden');
+      }
+
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Para Móviles o comportamientos extraños en el tope
+    });
+
+    // Lógica del buscador expandible
+    const searchIcon = document.getElementById('searchIcon');
+    const searchContainer = document.getElementById('searchContainer');
+    const searchInput = document.getElementById('searchInput');
+
+    if (searchIcon && searchContainer) {
+      searchIcon.addEventListener('click', (e) => {
+        if (!searchContainer.classList.contains('active')) {
+          e.preventDefault();
+          e.stopPropagation();
+          searchContainer.classList.add('active');
+          searchInput.focus();
+        } else if (searchInput.value.trim() === '') {
+          e.preventDefault();
+          e.stopPropagation();
+          searchContainer.classList.remove('active');
+        }
+      });
+
+      searchInput.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+
+      document.addEventListener('click', (e) => {
+        if (searchContainer.classList.contains('active') && !searchContainer.contains(e.target)) {
+          searchContainer.classList.remove('active');
+        }
+      });
+    }
+  </script>
+
+
+  <!-- Carousel -->
+  <div class="hero-video-container position-relative">
+
+    <img src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1774251059/LOGO_WEB_huxvyp.png" alt="Logo Central"
+      class="logo-flotante-carrusel">
+
+    <video id="miVideoFondo" autoplay muted loop playsinline class="video-fondo">
+      <source src="https://res.cloudinary.com/dsavkkpwg/video/upload/v1773962845/0319_n7t1ob.mp4" type="video/mp4">
+      Tu navegador no soporta videos HTML5.
+    </video>
+
+  </div>
+
+  <script>
+    // Seleccionamos el video por su ID
+    var video = document.getElementById("miVideoFondo");
+    // Cambiamos la velocidad. 1.0 es normal, 0.5 es la mitad de rápido, 2.0 es el doble de rápido.
+    video.playbackRate = 1.0; 
+  </script>
+
+  <!-- Colecciones -->
+  <div class="catalog-container">
+    <h2 class="catalog-title">Colecciones</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <img
+          src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1774249003/654029910_18090660758177680_2109214929237964324_n_j8z7bl.jpg"
+          class="card-image">
+        <div class="card-content">
+          <h2 class="title text-center pb-2">ADULTOS</h2>
+          <a href="{{ url_for('catalogo', genero='Adultos') }}" class="btn-whatsapp">Ver colección ➔</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1774249438/NI%C3%91OS_wu4kq8.png"
+          class="card-image">
+        <div class="card-content">
+          <h2 class="title text-center pb-2">NIÑOS</h2>
+          <a href="{{ url_for('catalogo', genero='Niños') }}" class="btn-whatsapp">Ver colección ➔</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Banner -->
+  <div class="split-banner-section">
+
+    <div class="split-images-wrapper">
+      <div class="split-half">
+        <img src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1773963256/MESA_1_nkqys3.jpg" alt="Modelo Urbano">
+      </div>
+      <div class="split-half">
+        <img src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1773963251/MESA_2_emglvb.jpg" alt="Detalle Zapato">
+      </div>
+    </div>
+
+    <div class="split-overlay"></div>
+
+    <div class="split-content text-center">
+
+      <h2 class="split-title text-white">LO NUEVO</h2>
+      <p class="split-subtitle text-white">Todo el estilo que necesitas</p>
+
+      <a href="{{ url_for('catalogo') }}" class="btn split-btn mt-3">VER COLECCIÓN</a>
+    </div>
+  </div>
+
+
+  <!-- Productos Destacados -->
+  <div class="apple-slider-section">
+
+    <div class="container mb-4 text-center">
+      <h2 class="featured-products-title text-white fw-bold">PRODUCTOS DESTACADOS</h2>
+    </div>
+
+    <div class="apple-scrolling-wrapper">
+
+      {% if destacados %}
+      {% for zapato in destacados %}
+      <a href="/catalogo?ver={{ zapato.id }}" class="apple-card shadow" style="text-decoration: none;">
+        <img src="{{ zapato.imagen }}" class="apple-card-bg" alt="{{ zapato.nombre }}">
+        <div class="apple-card-content">
+          <p class="apple-card-subtitle">{{ (zapato.marcas or 'Exclusivo')|replace(',', ' / ') }}</p>
+          <h3 class="apple-card-title">{{ zapato.nombre }}</h3>
+        </div>
+      </a>
+      {% endfor %}
+      {% else %}
+      <p class="text-white text-center w-100" style="opacity:0.6; padding: 40px 0;">
+        Próximamente productos destacados...
+      </p>
+      {% endif %}
+
+    </div>
+  </div>
+
+  <!-- Tendencias -->
+  <div class="tendencias-section py-5">
+    <div class="container mb-4">
+      <h2 class="featured-products-title text-white fw-bold"
+        style="font-family: 'Blowbrush', sans-serif; letter-spacing: 3px;">TENDENCIAS</h2>
+    </div>
+
+    <div class="tendencias-video-container">
+      <video autoplay muted loop playsinline class="video-fondo">
+        <source
+          src="https://res.cloudinary.com/dsavkkpwg/video/upload/v1774255523/1000_X_Eladio_Carri_N_-_New_Balance_Latinoam_Rica_720P_H264_Youtube_120Fps_h70ljs.mp4"
+          type="video/mp4">
+        Tu navegador no soporta videos HTML5.
+      </video>
+    </div>
+
+    <div class="tendencias-bar">
+      <span class="tendencias-artist">ELADIO CARRIÓN</span>
+      <span class="tendencias-extra">Desde las New Balance de Eladio Carrión hasta los últimos drops de Travis Scott. No
+        solo traemos zapatos,
+        traemos las piezas que definen la cultura urbana hoy. Si es edicion limitada, nosotros te la conseguimos.
+      </span>
+    </div>
+  </div>
+
+  <!-- Valores -->
+  <section class="values-section">
+    <div class="values-grid">
+
+      <!-- CARD 1 -->
+      <div class="value-card">
+        <div class="value-icon">
+          <!-- Icono placeholder: escudo con estrella — reemplazar con tu icono real -->
+          <svg viewBox="0 0 48 48">
+            <path d="M24 4L8 10v14c0 10 7 18.5 16 21 9-2.5 16-11 16-21V10L24 4z" />
+            <polygon points="24,16 26,21 32,21 27,25 29,31 24,27 19,31 21,25 16,21 22,21" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="value-title">100% Originales de USA</h3>
+        </div>
+        <p class="value-desc">
+          Directo de Estados Unidos. Fotos reales de cada modelo y revisión de calidad antes de
+          cada envío.
+          Desde USA directo a ti. Fotos reales y verificación de calidad garantizada.
+        </p>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="value-card">
+        <div class="value-icon">
+          <!-- Icono placeholder: mano abierta / comunidad — reemplazar con tu icono real -->
+          <svg viewBox="0 0 48 48">
+            <path d="M18 10v16M24 8v18M30 10v16" />
+            <path d="M12 22v4a12 12 0 0 0 12 12v0a12 12 0 0 0 12-12v-4" />
+            <line x1="6" y1="22" x2="42" y2="22" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="value-title">Envío Seguro a Venezuela</h3>
+        </div>
+        <p class="value-desc">
+          Desde Miami hasta tu ciudad. Gestionamos toda la importación, couriers y aduanas
+          para que recibas tus zapatos sin trámites ni complicaciones.
+        </p>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="value-card">
+        <div class="value-icon">
+          <!-- Icono placeholder: hoja / sustentabilidad — reemplazar con tu icono real -->
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="4" y="10" width="40" height="28" rx="4" />
+            <line x1="4" y1="20" x2="44" y2="20" />
+            <rect x="8" y="26" width="10" height="6" rx="1.5" fill="currentColor" opacity="0.4" stroke="none" />
+            <circle cx="36" cy="34" r="8" fill="currentColor" opacity="0.15" />
+            <text x="36" y="38" text-anchor="middle" font-size="10" fill="currentColor">$</text>
+          </svg>
+        </div>
+        <div>
+          <h3 class="value-title">Paga desde Venezuela</h3>
+        </div>
+        <p class="value-desc">
+          Olvídate de las tarjetas internacionales. Recibimos Zelle, Binance y efectivo.
+          Tú eliges cómo pagar, nosotros coordinamos.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" id="contacto">
+    <div class="footer-container">
+
+      <!-- Izquierda: Logo y descripción -->
+      <div class="footer-column">
+        <img src="{{ url_for('static', filename='img/Logox.png') }}" alt="Faby's Store Logo" class="footer-logo">
+        <p class="footer-desc">Creada y desarrollada por el equipo de XS3</p>
+        <ul class="footer-links" style="margin-top: -25px; margin-bottom: 20px;">
+          <li><a href="https://www.instagram.com/xs3_oficial/" target="_blank"><i class="bi bi-instagram"></i>
+              Instagram: @xs3_oficial</a></li>
+        </ul>
+      </div>
+
+      <!-- Centro: Links y Contacto -->
+      <div class="footer-column">
+        <h4 class="footer-title">Contacto</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:info@fabysstore.com"><i class="bi bi-envelope"></i> info@fabysstore.com</a></li>
+          <li><a href="https://wa.me/584141877974"><i class="bi bi-telephone"></i> +58 414-1877974</a></li>
+          <li><a href="https://wa.me/584241134865"><i class="bi bi-telephone"></i> +58 424-1134865</a></li>
+          <li><i class="bi bi-geo-alt"></i> Caracas, Venezuela</li>
+        </ul>
+      </div>
+
+      <!-- Derecha: Redes Sociales -->
+      <div class="footer-column">
+        <h4 class="footer-title">Síguenos</h4>
+        <div class="footer-social">
+          <a href="#" target="_blank" class="nav-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/fabysfrkystore.g/" target="_blank" class="nav-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+            </svg>
+          </a>
+          <a href="https://wa.me/584120000000" target="_blank" class="nav-icon">
+            <i class="bi bi-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Copyright (Pie del footer) -->
+    <div class="footer-bottom">
+      <p>&copy; 2026 Faby's Store. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Modal de Selección de WhatsApp -->
+  <div id="waSelectModal" class="wa-select-modal">
+    <div class="wa-select-content">
+      <span class="close-wa-modal">&times;</span>
+      <h3 class="wa-modal-title">Selecciona un número</h3>
+      <p class="wa-modal-desc">Elige con qué asesor deseas comunicarte.</p>
+      <div class="wa-options-container">
+        <a id="waOption1" href="#" target="_blank" class="wa-option-btn">
+          <img src="{{ url_for('static', filename='img/venezuela.png') }}" alt="Venezuela" class="flag-icon">
+          +58 414-1877974
+        </a>
+        <a id="waOption2" href="#" target="_blank" class="wa-option-btn">
+          <img src="{{ url_for('static', filename='img/usa.png') }}" alt="Estados Unidos" class="flag-icon">
+          +58 424-1134865
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Lógica del Modal Selección WhatsApp
+    const waSelectModal = document.getElementById('waSelectModal');
+    const closeWaModalBtn = document.querySelector('.close-wa-modal');
+    const waOption1 = document.getElementById('waOption1');
+    const waOption2 = document.getElementById('waOption2');
+
+    document.addEventListener('click', function (e) {
+      // Buscamos si el clic fue en un enlace de whatsapp con las clases específicas
+      const waBtn = e.target.closest('a[href^="https://wa.me/"]');
+      if (waBtn && (waBtn.classList.contains('product-btn') || waBtn.classList.contains('empty-state-whatsapp-square') || waBtn.id === 'modalWhatsApp' || waBtn.classList.contains('nav-icon'))) {
+        e.preventDefault();
+        const originalHref = waBtn.href;
+
+        try {
+          const urlObj = new URL(originalHref);
+          const textParam = urlObj.searchParams.get('text') || '';
+
+          const num1 = "584141877974"; // Asesor 1
+          const num2 = "584241134865"; // Asesor 2
+
+          waOption1.href = `https://wa.me/${num1}?text=${encodeURIComponent(textParam)}`;
+          waOption2.href = `https://wa.me/${num2}?text=${encodeURIComponent(textParam)}`;
+        } catch (err) {
+          console.error("Link format error:", err);
+          // Fallback directo
+          waOption1.href = originalHref;
+          waOption2.href = originalHref.replace('584141877974', '14709492753').replace('584120000000', '14709492753');
+        }
+
+        waSelectModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+
+    closeWaModalBtn.addEventListener('click', () => {
+      waSelectModal.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    waSelectModal.addEventListener('click', (e) => {
+      if (e.target === waSelectModal) {
+        waSelectModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Cerrar modal al seleccionar un asesor
+    document.querySelectorAll('.wa-option-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        waSelectModal.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
+
+</body>
+
+</html>
