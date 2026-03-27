@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Faby's Store</title>
-  <link rel="icon" href="{{ url_for('static', filename='img/favicon-32x32.png') }}" type="image/png">
+  <link rel="icon" href="https://res.cloudinary.com/dsavkkpwg/image/upload/v1774304598/ICONO_mjm0ej.webp"
+    type="image/png">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -188,14 +189,14 @@
   </script>
 
 
-  <!-- Carousel -->
+  <!-- Video -->
   <div class="hero-video-container position-relative">
 
     <img src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1774251059/LOGO_WEB_huxvyp.png" alt="Logo Central"
       class="logo-flotante-carrusel">
 
-    <video id="miVideoFondo" autoplay muted loop playsinline class="video-fondo">
-      <source src="https://res.cloudinary.com/dsavkkpwg/video/upload/v1773962845/0319_n7t1ob.mp4" type="video/mp4">
+    <video id="miVideoFondo" autoplay muted loop playsinline webkit-playsinline class="video-fondo">
+      <source src="https://res.cloudinary.com/dsavkkpwg/video/upload/v1774569745/video_d0twnn.mp4" type="video/mp4">
       Tu navegador no soporta videos HTML5.
     </video>
 
@@ -203,9 +204,19 @@
 
   <script>
     // Seleccionamos el video por su ID
-    var video = document.getElementById("miVideoFondo");
+    var video1 = document.getElementById("miVideoFondo");
     // Cambiamos la velocidad. 1.0 es normal, 0.5 es la mitad de rápido, 2.0 es el doble de rápido.
-    video.playbackRate = 1.0; 
+    if (video1) {
+      video1.playbackRate = 1.0;
+      video1.muted = true; // Forzar mute explícito para iOS
+
+      var playPromise1 = video1.play();
+      if (playPromise1 !== undefined) {
+        playPromise1.catch(function (error) {
+          console.log("Autoplay prevenido por el navegador en miVideoFondo:", error);
+        });
+      }
+    }
   </script>
 
   <!-- Colecciones -->
@@ -297,12 +308,24 @@
     </div>
 
     <div class="tendencias-video-container">
-      <video autoplay muted loop playsinline class="video-fondo">
+      <video id="videoTendencias" autoplay muted loop playsinline webkit-playsinline class="video-fondo">
         <source
           src="https://res.cloudinary.com/dsavkkpwg/video/upload/v1774255523/1000_X_Eladio_Carri_N_-_New_Balance_Latinoam_Rica_720P_H264_Youtube_120Fps_h70ljs.mp4"
           type="video/mp4">
         Tu navegador no soporta videos HTML5.
       </video>
+      <script>
+        var video2 = document.getElementById("videoTendencias");
+        if (video2) {
+          video2.muted = true; // Forzar mute explícito para iOS
+          var playPromise2 = video2.play();
+          if (playPromise2 !== undefined) {
+            playPromise2.catch(function (error) {
+              console.log("Autoplay prevenido por el navegador en videoTendencias:", error);
+            });
+          }
+        }
+      </script>
     </div>
 
     <div class="tendencias-bar">

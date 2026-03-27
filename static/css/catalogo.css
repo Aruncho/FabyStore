@@ -347,17 +347,17 @@
 
 .featured-badge {
     top: 15px;
-    background-color: #E76F51;
+    background-color: #eb3b5a;
     color: #fff;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .new-badge {
-    top: 45px;
+    top: 15px;
     /* Se posiciona debajo del de destacado si ambos existen */
     background-color: var(--accent);
-    /* Verde Faby's */
-    color: #000;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Si NO hay badge de destacado, subimos el de 'Lo Nuevo' */

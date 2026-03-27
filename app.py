@@ -132,7 +132,7 @@ def catalogo():
         lista_zapatos = todos_los_zapatos
 
     # 5. Traer lista de marcas para el sidebar
-    cursor.execute("SELECT nombre FROM marcas ORDER BY nombre")
+    cursor.execute("SELECT nombre FROM marcas ORDER BY id")
     # Nota: Si tu fetchall() devuelve diccionarios/Row, esto funciona. Si devuelve tuplas, sería row[0]
     lista_marcas = [row['nombre'] for row in cursor.fetchall()]
 
