@@ -802,7 +802,25 @@ nav.nav-hidden {
   text-shadow: 2px 2px 0px #000;
 }
 
-/* --- 7. MAGIA RESPONSIVE (PC) --- */
+/* --- RESPONSIVE (MÓVIL) --- */
+@media (max-width: 768px) {
+  .apple-slider-section {
+    padding-top: 80px;
+    padding-bottom: 40px;
+  }
+
+  .tendencias-section {
+    padding-top: 30px !important;
+  }
+
+  .featured-products-title {
+    font-size: 2.2rem;
+    margin-top: 0px;
+    margin-bottom: 20px;
+  }
+}
+
+/* --- RESPONSIVE (PC) --- */
 @media (min-width: 992px) {
   .apple-scrolling-wrapper {
     padding-left: 20px;
@@ -811,6 +829,11 @@ nav.nav-hidden {
 
     /* Centrar las cartas */
     justify-content: center;
+  }
+
+  .featured-products-title {
+    margin-top: -10px;
+    margin-bottom: 0px;
   }
 }
 
@@ -1086,7 +1109,8 @@ nav.nav-hidden {
 
 .footer-links li a:hover {
   color: var(--accent);
-  transform: translateX(8px); /* Se mueve a la derecha un poquito indicando que es clicable */
+  transform: translateX(8px);
+  /* Se mueve a la derecha un poquito indicando que es clicable */
 }
 
 .footer-links li a:hover::after {
