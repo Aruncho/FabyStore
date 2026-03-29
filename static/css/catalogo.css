@@ -478,6 +478,7 @@
         align-items: center;
         /* Centra los hijos horizontalmente en móvil */
         padding: 40px 16px;
+        gap: 15px;
     }
 
     .products-grid-container {
@@ -497,6 +498,7 @@
 
     .mobile-filter-btn {
         display: block;
+        margin-bottom: 0;
     }
 
     .products-toolbar {
@@ -572,16 +574,26 @@
 .pmodal-close {
     position: absolute;
     top: 12px;
-    right: 16px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    background: #000;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
     color: #fff;
-    font-size: 2rem;
-    line-height: 1;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     z-index: 10;
+    transition: background 0.2s, border-color 0.2s;
 }
 
 .pmodal-close:hover {
-    color: #3dd420;
+    background: #3dd420;
+    border-color: #3dd420;
+    color: #000;
 }
 
 .pmodal-img {
@@ -698,4 +710,35 @@
         font-size: 0.85rem;
         flex-shrink: 0;
     }
+}
+
+/* Botón de scroll */
+#scrollTopBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #111;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+#scrollTopBtn.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+#scrollTopBtn:hover {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: #000;
 }
