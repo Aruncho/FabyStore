@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Faby's Store{% endblock %}</title>
+  <link rel="icon" href="https://res.cloudinary.com/dsavkkpwg/image/upload/v1774304598/ICONO_mjm0ej.webp"
+    type="image/png">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block extra_css %}{% endblock %}
+
+  <!-- Etiquetas para que se vea bien en WhatsApp y Redes Sociales (Open Graph) -->
+  <meta property="og:title" content="Faby's Store - Estilo y Calidad en Cada Paso">
+  <meta property="og:description"
+    content="Encuentra las mejores marcas 100% originales traídas de USA. ¡Envíos seguros a toda Venezuela!">
+  <meta property="og:image" content="https://res.cloudinary.com/dsavkkpwg/image/upload/v1775166808/F-icon_tpvcla.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="{{ request.url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Faby's Store">
+
+  <!-- Para Twitter/X también -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Faby's Store - Calzado Original">
+  <meta name="twitter:description"
+    content="Las mejores marcas directo de USA a tus pies. Pago en Zelle, Binance y Efectivo.">
+  <meta name="twitter:image" content="https://res.cloudinary.com/dsavkkpwg/image/upload/v1775166808/F-icon_tpvcla.jpg">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-inner">
+      <a href="{{ url_for('inicio') }}" class="logo">
+        <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="Logo-img" class="logo-img">
+      </a>
+
+      <!-- LINKS CENTRADOS -->
+      <div class="nav-center">
+        <a href="{{ url_for('inicio') }}"
+          class="nav-link {% if request.endpoint == 'inicio' %}active{% endif %}">Inicio</a>
+        <a href="{{ url_for('catalogo') }}"
+          class="nav-link {% if request.endpoint == 'catalogo' %}active{% endif %}">Catálogo</a>
+        <a href="#contacto" class="nav-link">Contacto</a>
+      </div>
+
+      <!-- ICONS + HAMBURGER -->
+      <div class="nav-right">
+        <!-- Búsqueda -->
+        <form class="search-container" id="searchContainer" action="{{ url_for('catalogo') }}" method="GET">
+          <input type="text" class="search-input" name="q" id="searchInput" placeholder="Buscar...">
+          <button type="submit" class="nav-icon" id="searchIcon"
+            style="background: none; border: none; padding: 0; cursor: pointer;">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </button>
+        </form>
+        <!-- TikTok -->
+        <a href="#" target="_blank" class="nav-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.8">
+            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+          </svg>
+        </a>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/fabysfrkystore.g/" target="_blank" class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+            <circle cx="12" cy="12" r="4" />
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+          </svg>
+        </a>
+        <!-- WhatsApp -->
+        <a href="https://wa.me/584120000000" target="_blank" class="nav-icon">
+          <i class="bi bi-whatsapp"></i>
+        </a>
+      </div>
+
+      <!-- HAMBURGER (mobile) -->
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+
+    <!-- Buscador móvil -->
+    <form class="mobile-search-container" action="{{ url_for('catalogo') }}" method="GET">
+      <input type="text" class="mobile-search-input" name="q" placeholder="Buscar..." required>
+      <button type="submit" class="mobile-search-icon"
+        style="background: none; border: none; padding: 0; cursor: pointer;">
+        <svg viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+      </button>
+    </form>
+
+    <a href="{{ url_for('inicio') }}" class="nav-link {% if request.endpoint == 'inicio' %}active{% endif %}">Inicio</a>
+    <a href="{{ url_for('catalogo') }}"
+      class="nav-link {% if request.endpoint == 'catalogo' %}active{% endif %}">Catálogo</a>
+    <a href="#contacto" class="nav-link">Contacto</a>
+
+    <div class="mobile-social">
+      <a href="#" target="_blank" class="nav-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+        </svg>
+      </a>
+      <a href="https://www.instagram.com/fabysfrkystore.g/" target="_blank" class="nav-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+          <circle cx="12" cy="12" r="4" />
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+        </svg>
+      </a>
+      <a href="https://wa.me/584120000000" target="_blank" class="nav-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884" />
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Overlay para el menú móvil -->
+  <div id="overlay" class="overlay"></div>
+
+  <!-- AQUI VA EL CONTENIDO PRINCIPAL DE CADA PAGINA -->
+  {% block content %}{% endblock %}
+
+  <!-- Footer -->
+  <footer class="footer" id="contacto">
+    <div class="footer-container">
+
+      <!-- Izquierda: Logo y descripción -->
+      <div class="footer-column">
+        <img src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1774303792/LogoX_h3lvqi.png" alt="XS3 Logo"
+          class="footer-logo">
+        <p class="footer-desc">Creada y desarrollada por el equipo de XS3</p>
+        <ul class="footer-links" style="margin-top: -25px; margin-bottom: 20px;">
+          <li><a href="https://www.instagram.com/xs3_oficial/" target="_blank"><i class="bi bi-instagram"></i>
+              Instagram: @xs3_oficial</a></li>
+        </ul>
+      </div>
+
+      <!-- Centro: Links y Contacto -->
+      <div class="footer-column">
+        <h4 class="footer-title">Contacto</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:Fabiola.porras.b@gmail.com"><i class="bi bi-envelope"></i>Fabiola.porras.b@gmail.com</a>
+          </li>
+          <li><a href="https://wa.me/584241147116"><i class="bi bi-telephone"></i> +58 424-1147116</a></li>
+          <li><a href="https://wa.me/14709492753"><i class="bi bi-telephone"></i> +1 470-949-2753</a></li>
+          <li><i class="bi bi-geo-alt"></i> Caracas, Venezuela</li>
+        </ul>
+      </div>
+
+      <!-- Derecha: Redes Sociales -->
+      <div class="footer-column">
+        <h4 class="footer-title">Síguenos</h4>
+        <div class="footer-social">
+          <a href="#" target="_blank" class="nav-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/fabysfrkystore.g/" target="_blank" class="nav-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+            </svg>
+          </a>
+          <a href="https://wa.me/584120000000" target="_blank" class="nav-icon">
+            <i class="bi bi-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Copyright (Pie del footer) -->
+    <div class="footer-bottom">
+      <p>&copy; 2026 Faby's Store. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Modal de Selección de WhatsApp compartida -->
+  <div id="waSelectModal" class="wa-select-modal">
+    <div class="wa-select-content">
+      <span class="close-wa-modal">&times;</span>
+      <h3 class="wa-modal-title">Selecciona un número</h3>
+      <p class="wa-modal-desc">Elige con qué asesor deseas comunicarte.</p>
+      <div class="wa-options-container">
+        <a id="waOption1" href="#" target="_blank" class="wa-option-btn">
+          <img src="{{ url_for('static', filename='img/venezuela.png') }}" alt="Venezuela" class="flag-icon">
+          +58 424-1147116
+        </a>
+        <a id="waOption2" href="#" target="_blank" class="wa-option-btn">
+          <img src="{{ url_for('static', filename='img/usa.png') }}" alt="Estados Unidos" class="flag-icon">
+          +1 470-949-2753
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Lógica compartida -->
+  <!-- Scripts centralizados -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+  <!-- Lógica específica de la página -->
+  {% block extra_js %}{% endblock %}
+
+</body>
+
+</html>
