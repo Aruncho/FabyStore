@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" prefix="og: http://ogp.me/ns#">
 
 <head>
   <meta charset="UTF-8">
@@ -13,22 +13,28 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   {% block extra_css %}{% endblock %}
 
-  <!-- Etiquetas para que se vea bien en WhatsApp y Redes Sociales (Open Graph) -->
+  <!-- SEO y Open Graph (WhatsApp, Facebook, Instagram) -->
+  <meta name="description"
+    content="Encuentra las mejores marcas 100% originales traídas de USA. ¡Envíos seguros a toda Venezuela!">
+
+  <!-- Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ request.url }}">
   <meta property="og:title" content="Faby's Store - Estilo y Calidad en Cada Paso">
   <meta property="og:description"
     content="Encuentra las mejores marcas 100% originales traídas de USA. ¡Envíos seguros a toda Venezuela!">
   <meta property="og:image" content="https://res.cloudinary.com/dsavkkpwg/image/upload/v1775166808/F-icon_tpvcla.jpg">
+  <meta property="og:image:secure_url"
+    content="https://res.cloudinary.com/dsavkkpwg/image/upload/v1775166808/F-icon_tpvcla.jpg">
+  <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:url" content="{{ request.url }}">
-  <meta property="og:type" content="website">
   <meta property="og:site_name" content="Faby's Store">
 
-  <!-- Para Twitter/X también -->
+  <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Faby's Store - Calzado Original">
-  <meta name="twitter:description"
-    content="Las mejores marcas directo de USA a tus pies. Pago en Zelle, Binance y Efectivo.">
+  <meta name="twitter:description" content="Las mejores marcas directo de USA. Pago en Zelle, Binance y Efectivo.">
   <meta name="twitter:image" content="https://res.cloudinary.com/dsavkkpwg/image/upload/v1775166808/F-icon_tpvcla.jpg">
 </head>
 
