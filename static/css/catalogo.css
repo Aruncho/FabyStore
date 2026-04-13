@@ -296,26 +296,33 @@
 }
 
 .empty-state-btn {
-    padding: 12px 30px;
-    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 55px;
+    padding: 0 25px;
+    font-size: 0.9rem;
     margin: 0 !important;
-    /* Reset any margins that might interfere */
+    text-align: center;
+    line-height: 1.2;
 }
 
 .empty-state-whatsapp-square {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     width: 50px;
     height: 50px;
     background-color: #25D366;
     color: #fff;
+    border: 2px solid transparent;
     border-radius: 0px;
     /* Square with slight rounding */
     font-size: 1.8rem;
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4);
+    flex-shrink: 0;
 }
 
 .empty-state-whatsapp-square:hover {
@@ -323,6 +330,30 @@
     background-color: #1ebe57;
     box-shadow: 0 8px 15px rgba(37, 211, 102, 0.6);
     color: #fff;
+}
+
+/* Responsivo para pantallas muy pequeñas (390px y menos) */
+@media (max-width: 390px) {
+    .empty-state-title {
+        font-size: 1.8rem;
+    }
+
+    .empty-state-actions {
+        gap: 10px;
+    }
+
+    .empty-state-btn {
+        padding: 0 15px;
+        font-size: 0.85rem;
+        height: 50px;
+    }
+
+    .empty-state-whatsapp-square {
+        width: 46px;
+        height: 46px;
+        font-size: 1.5rem;
+        border: 2px solid transparent;
+    }
 }
 
 /* ESTILO DE CADA PRODUCTO */
