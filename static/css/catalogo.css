@@ -196,6 +196,37 @@
     justify-content: center;
 }
 
+/* DIVISOR DE CATEGORÍAS */
+.category-divider {
+    grid-column: 1 / -1;
+    width: 100%;
+    margin: 20px 0 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.category-divider.m-top {
+    margin-top: 40px;
+}
+
+.category-divider-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.category-divider-line {
+    border: 0;
+    height: 2px;
+    background: linear-gradient(to right, rgba(84, 211, 44, 0.8) 0%, transparent 100%);
+    margin: 0;
+}
+
 /* === EMPTY STATE CATCH (Sin Resultados) === */
 .empty-state-container {
     grid-column: 1 / -1;

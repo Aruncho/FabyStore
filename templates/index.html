@@ -3,193 +3,192 @@
 {% block title %}Faby's Store{% endblock %}
 
 {% block content %}
-  <!-- Video -->
-  <div class="hero-video-container position-relative">
+<!-- Video -->
+<div class="hero-video-container position-relative">
 
-    <img src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1774251059/LOGO_WEB_huxvyp.png" alt="Logo Central"
-      class="logo-flotante-carrusel">
+  <img src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1774251059/LOGO_WEB_huxvyp.png" alt="Logo Central"
+    class="logo-flotante-carrusel">
 
-    <video id="miVideoFondo" autoplay muted loop playsinline webkit-playsinline class="video-fondo">
-      <source src="https://res.cloudinary.com/dsavkkpwg/video/upload/v1774570499/0319_gtfz4m.mp4" type="video/mp4">
+  <video id="miVideoFondo" autoplay muted loop playsinline webkit-playsinline class="video-fondo">
+    <source src="https://res.cloudinary.com/dsavkkpwg/video/upload/v1774570499/0319_gtfz4m.mp4" type="video/mp4">
+    Tu navegador no soporta videos HTML5.
+  </video>
+
+</div>
+
+
+
+<!-- Colecciones -->
+<div class="catalog-container">
+  <h2 class="catalog-title">Colecciones</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <img
+        src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1774249003/654029910_18090660758177680_2109214929237964324_n_j8z7bl.jpg"
+        class="card-image">
+      <div class="card-content">
+        <h2 class="title text-center pb-2">ADULTOS</h2>
+        <a href="{{ url_for('catalogo', genero='Adultos') }}" class="btn-whatsapp">Ver colección ➔</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1774249438/NI%C3%91OS_wu4kq8.png" class="card-image">
+      <div class="card-content">
+        <h2 class="title text-center pb-2">NIÑOS</h2>
+        <a href="{{ url_for('catalogo', genero='Niños') }}" class="btn-whatsapp">Ver colección ➔</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Banner -->
+<div class="split-banner-section">
+
+  <div class="split-images-wrapper">
+    <div class="split-half">
+      <img src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1773963256/MESA_1_nkqys3.jpg" alt="Modelo Urbano">
+    </div>
+    <div class="split-half">
+      <img src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1773963251/MESA_2_emglvb.jpg" alt="Detalle Zapato">
+    </div>
+  </div>
+
+  <div class="split-overlay"></div>
+
+  <div class="split-content text-center">
+
+    <h2 class="split-title text-white">LO NUEVO</h2>
+    <p class="split-subtitle text-white">Todo el estilo que necesitas</p>
+
+    <a href="{{ url_for('catalogo') }}" class="btn split-btn mt-3">VER COLECCIÓN</a>
+  </div>
+</div>
+
+
+<!-- Productos Destacados -->
+<div class="apple-slider-section">
+
+  <div class="container mb-4 text-center">
+    <h2 class="featured-products-title text-white fw-bold">PRODUCTOS DESTACADOS</h2>
+  </div>
+
+  <div class="apple-scrolling-wrapper">
+
+    {% if destacados %}
+    {% for zapato in destacados %}
+    <a href="/catalogo?ver={{ zapato.id }}" class="apple-card shadow" style="text-decoration: none;">
+      <img src="{{ zapato.imagen }}" class="apple-card-bg" alt="{{ zapato.nombre }}">
+      <div class="apple-card-content">
+        <p class="apple-card-subtitle">{{ (zapato.marcas or 'Exclusivo')|replace(',', ' / ') }}</p>
+        <h3 class="apple-card-title">{{ zapato.nombre }}</h3>
+      </div>
+    </a>
+    {% endfor %}
+    {% else %}
+    <p class="text-white text-center w-100" style="opacity:0.6; padding: 40px 0;">
+      Próximamente productos destacados...
+    </p>
+    {% endif %}
+
+  </div>
+</div>
+
+<!-- Tendencias -->
+<div class="tendencias-section py-5">
+  <div class="container mb-4">
+    <h2 class="featured-products-title text-white fw-bold"
+      style="font-family: 'Blowbrush', sans-serif; letter-spacing: 3px;">TENDENCIAS</h2>
+  </div>
+
+  <div class="tendencias-video-container">
+    <video id="videoTendencias" autoplay muted loop playsinline webkit-playsinline class="video-fondo">
+      <source
+        src="https://res.cloudinary.com/dsavkkpwg/video/upload/v1774255523/1000_X_Eladio_Carri_N_-_New_Balance_Latinoam_Rica_720P_H264_Youtube_120Fps_h70ljs.mp4"
+        type="video/mp4">
       Tu navegador no soporta videos HTML5.
     </video>
 
   </div>
 
-
-
-  <!-- Colecciones -->
-  <div class="catalog-container">
-    <h2 class="catalog-title">Colecciones</h2>
-
-    <div class="grid">
-
-      <div class="card">
-        <img
-          src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1774249003/654029910_18090660758177680_2109214929237964324_n_j8z7bl.jpg"
-          class="card-image">
-        <div class="card-content">
-          <h2 class="title text-center pb-2">ADULTOS</h2>
-          <a href="{{ url_for('catalogo', genero='Adultos') }}" class="btn-whatsapp">Ver colección ➔</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1774249438/NI%C3%91OS_wu4kq8.png"
-          class="card-image">
-        <div class="card-content">
-          <h2 class="title text-center pb-2">NIÑOS</h2>
-          <a href="{{ url_for('catalogo', genero='Niños') }}" class="btn-whatsapp">Ver colección ➔</a>
-        </div>
-      </div>
-
-    </div>
+  <div class="tendencias-bar">
+    <span class="tendencias-artist">ELADIO CARRIÓN</span>
+    <span class="tendencias-extra">Desde las New Balance de Eladio Carrión hasta los últimos drops de Travis Scott. No
+      solo traemos zapatos,
+      traemos las piezas que definen la cultura urbana hoy. Si es edicion limitada, nosotros te la conseguimos.
+    </span>
   </div>
+</div>
 
+<!-- Valores -->
+<section class="values-section">
+  <div class="values-grid">
 
-  <!-- Banner -->
-  <div class="split-banner-section">
-
-    <div class="split-images-wrapper">
-      <div class="split-half">
-        <img src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1773963256/MESA_1_nkqys3.jpg" alt="Modelo Urbano">
+    <!-- CARD 1 -->
+    <div class="value-card">
+      <div class="value-icon">
+        <svg viewBox="0 0 48 48">
+          <path d="M24 4L8 10v14c0 10 7 18.5 16 21 9-2.5 16-11 16-21V10L24 4z" />
+          <polygon points="24,16 26,21 32,21 27,25 29,31 24,27 19,31 21,25 16,21 22,21" />
+        </svg>
       </div>
-      <div class="split-half">
-        <img src="https://res.cloudinary.com/dsavkkpwg/image/upload/v1773963251/MESA_2_emglvb.jpg" alt="Detalle Zapato">
+      <div>
+        <h3 class="value-title">100% Originales de USA</h3>
       </div>
-    </div>
-
-    <div class="split-overlay"></div>
-
-    <div class="split-content text-center">
-
-      <h2 class="split-title text-white">LO NUEVO</h2>
-      <p class="split-subtitle text-white">Todo el estilo que necesitas</p>
-
-      <a href="{{ url_for('catalogo') }}" class="btn split-btn mt-3">VER COLECCIÓN</a>
-    </div>
-  </div>
-
-
-  <!-- Productos Destacados -->
-  <div class="apple-slider-section">
-
-    <div class="container mb-4 text-center">
-      <h2 class="featured-products-title text-white fw-bold">PRODUCTOS DESTACADOS</h2>
-    </div>
-
-    <div class="apple-scrolling-wrapper">
-
-      {% if destacados %}
-      {% for zapato in destacados %}
-      <a href="/catalogo?ver={{ zapato.id }}" class="apple-card shadow" style="text-decoration: none;">
-        <img src="{{ zapato.imagen }}" class="apple-card-bg" alt="{{ zapato.nombre }}">
-        <div class="apple-card-content">
-          <p class="apple-card-subtitle">{{ (zapato.marcas or 'Exclusivo')|replace(',', ' / ') }}</p>
-          <h3 class="apple-card-title">{{ zapato.nombre }}</h3>
-        </div>
-      </a>
-      {% endfor %}
-      {% else %}
-      <p class="text-white text-center w-100" style="opacity:0.6; padding: 40px 0;">
-        Próximamente productos destacados...
+      <p class="value-desc">
+        Directo de Estados Unidos. Fotos reales de cada modelo y revisión de calidad antes de
+        cada envío.
+        Desde USA directo a ti. Fotos reales y verificación de calidad garantizada.
       </p>
-      {% endif %}
-
     </div>
+
+    <!-- CARD 2 -->
+    <div class="value-card">
+      <div class="value-icon">
+        <svg viewBox="0 0 48 48">
+          <path d="M18 10v16M24 8v18M30 10v16" />
+          <path d="M12 22v4a12 12 0 0 0 12 12v0a12 12 0 0 0 12-12v-4" />
+          <line x1="6" y1="22" x2="42" y2="22" />
+        </svg>
+      </div>
+      <div>
+        <h3 class="value-title">Envío Seguro a Venezuela</h3>
+      </div>
+      <p class="value-desc">
+        Desde Miami hasta tu ciudad. Gestionamos toda la importación, couriers y aduanas
+        para que recibas tus zapatos sin trámites ni complicaciones.
+      </p>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="value-card">
+      <div class="value-icon">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <rect x="4" y="10" width="40" height="28" rx="4" />
+          <line x1="4" y1="20" x2="44" y2="20" />
+          <rect x="8" y="26" width="10" height="6" rx="1.5" fill="currentColor" opacity="0.4" stroke="none" />
+          <circle cx="36" cy="34" r="8" fill="currentColor" opacity="0.15" />
+          <text x="36" y="38" text-anchor="middle" font-size="10" fill="currentColor">$</text>
+        </svg>
+      </div>
+      <div>
+        <h3 class="value-title">Paga desde Venezuela</h3>
+      </div>
+      <p class="value-desc">
+        Recibimos Zelle, Binance y efectivo.
+        Tú eliges cómo pagar, nosotros coordinamos.
+      </p>
+    </div>
+
   </div>
-
-  <!-- Tendencias -->
-  <div class="tendencias-section py-5">
-    <div class="container mb-4">
-      <h2 class="featured-products-title text-white fw-bold"
-        style="font-family: 'Blowbrush', sans-serif; letter-spacing: 3px;">TENDENCIAS</h2>
-    </div>
-
-    <div class="tendencias-video-container">
-      <video id="videoTendencias" autoplay muted loop playsinline webkit-playsinline class="video-fondo">
-        <source
-          src="https://res.cloudinary.com/dsavkkpwg/video/upload/v1774255523/1000_X_Eladio_Carri_N_-_New_Balance_Latinoam_Rica_720P_H264_Youtube_120Fps_h70ljs.mp4"
-          type="video/mp4">
-        Tu navegador no soporta videos HTML5.
-      </video>
-
-    </div>
-
-    <div class="tendencias-bar">
-      <span class="tendencias-artist">ELADIO CARRIÓN</span>
-      <span class="tendencias-extra">Desde las New Balance de Eladio Carrión hasta los últimos drops de Travis Scott. No
-        solo traemos zapatos,
-        traemos las piezas que definen la cultura urbana hoy. Si es edicion limitada, nosotros te la conseguimos.
-      </span>
-    </div>
-  </div>
-
-  <!-- Valores -->
-  <section class="values-section">
-    <div class="values-grid">
-
-      <!-- CARD 1 -->
-      <div class="value-card">
-        <div class="value-icon">
-          <svg viewBox="0 0 48 48">
-            <path d="M24 4L8 10v14c0 10 7 18.5 16 21 9-2.5 16-11 16-21V10L24 4z" />
-            <polygon points="24,16 26,21 32,21 27,25 29,31 24,27 19,31 21,25 16,21 22,21" />
-          </svg>
-        </div>
-        <div>
-          <h3 class="value-title">100% Originales de USA</h3>
-        </div>
-        <p class="value-desc">
-          Directo de Estados Unidos. Fotos reales de cada modelo y revisión de calidad antes de
-          cada envío.
-          Desde USA directo a ti. Fotos reales y verificación de calidad garantizada.
-        </p>
-      </div>
-
-      <!-- CARD 2 -->
-      <div class="value-card">
-        <div class="value-icon">
-          <svg viewBox="0 0 48 48">
-            <path d="M18 10v16M24 8v18M30 10v16" />
-            <path d="M12 22v4a12 12 0 0 0 12 12v0a12 12 0 0 0 12-12v-4" />
-            <line x1="6" y1="22" x2="42" y2="22" />
-          </svg>
-        </div>
-        <div>
-          <h3 class="value-title">Envío Seguro a Venezuela</h3>
-        </div>
-        <p class="value-desc">
-          Desde Miami hasta tu ciudad. Gestionamos toda la importación, couriers y aduanas
-          para que recibas tus zapatos sin trámites ni complicaciones.
-        </p>
-      </div>
-
-      <!-- CARD 3 -->
-      <div class="value-card">
-        <div class="value-icon">
-          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <rect x="4" y="10" width="40" height="28" rx="4" />
-            <line x1="4" y1="20" x2="44" y2="20" />
-            <rect x="8" y="26" width="10" height="6" rx="1.5" fill="currentColor" opacity="0.4" stroke="none" />
-            <circle cx="36" cy="34" r="8" fill="currentColor" opacity="0.15" />
-            <text x="36" y="38" text-anchor="middle" font-size="10" fill="currentColor">$</text>
-          </svg>
-        </div>
-        <div>
-          <h3 class="value-title">Paga desde Venezuela</h3>
-        </div>
-        <p class="value-desc">
-          Olvídate de las tarjetas internacionales. Recibimos Zelle, Binance y efectivo.
-          Tú eliges cómo pagar, nosotros coordinamos.
-        </p>
-      </div>
-
-    </div>
-  </section>
+</section>
 {% endblock %}
 
 {% block extra_js %}
-  <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
 {% endblock %}

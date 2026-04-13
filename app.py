@@ -22,12 +22,12 @@ def inicio():
     cursor = conexion.cursor()
 
     cursor.execute("""
-        SELECT z.id, z.nombre, z.imagen, z.es_nuevo, z.destacado AS es_destacado,
+        SELECT z.id, z.nombre, z.imagen, z.es_nuevo, z.destacado AS es_destacado, z.tipo_prenda,
                GROUP_CONCAT(DISTINCT g.genero) AS generos,
                GROUP_CONCAT(DISTINCT m.nombre) AS marcas
-        FROM zapatos z
-        LEFT JOIN zapato_genero g ON z.id = g.zapato_id
-        LEFT JOIN zapato_marca zm ON z.id = zm.zapato_id
+        FROM productos z
+        LEFT JOIN producto_audiencia g ON z.id = g.zapato_id
+        LEFT JOIN producto_marca zm ON z.id = zm.zapato_id
         LEFT JOIN marcas m ON zm.marca_id = m.id
         WHERE z.activo = 1 AND z.nombre != ''
         GROUP BY z.id
@@ -39,8 +39,8 @@ def inicio():
     cursor.execute("""
         SELECT z.id, z.nombre, z.imagen,
                GROUP_CONCAT(DISTINCT m.nombre) AS marcas
-        FROM zapatos z
-        LEFT JOIN zapato_marca zm ON z.id = zm.zapato_id
+        FROM productos z
+        LEFT JOIN producto_marca zm ON z.id = zm.zapato_id
         LEFT JOIN marcas m ON zm.marca_id = m.id
         WHERE z.activo = 1 AND z.destacado = 1 AND z.nombre != ''
         GROUP BY z.id
@@ -64,30 +64,36 @@ def catalogo():
     filtro_genero = request.args.get('genero', 'Todos')
     filtro_marca = request.args.get('marca', 'Todas')
     orden_seleccionado = request.args.get('orden', 'destacados')
+    filtro_prenda = request.args.get('prenda', 'Todas')
 
     # 2. CONSTRUIR LA CONSULTA SQL BASE (Filtros de sidebar)
     query = """
-        SELECT z.id, z.nombre, z.imagen, z.es_nuevo, z.destacado AS es_destacado,
+        SELECT z.id, z.nombre, z.imagen, z.es_nuevo, z.destacado AS es_destacado, z.tipo_prenda,
                GROUP_CONCAT(DISTINCT g.genero) AS generos,
                GROUP_CONCAT(DISTINCT m.nombre) AS marcas
-        FROM zapatos z
-        LEFT JOIN zapato_genero g ON z.id = g.zapato_id
-        LEFT JOIN zapato_marca zm ON z.id = zm.zapato_id
+        FROM productos z
+        LEFT JOIN producto_audiencia g ON z.id = g.zapato_id
+        LEFT JOIN producto_marca zm ON z.id = zm.zapato_id
         LEFT JOIN marcas m ON zm.marca_id = m.id
         WHERE z.activo = 1 AND z.nombre != ''
     """
     parametros = []
 
+    # 2.0. Filtro de prenda
+    if filtro_prenda != 'Todas':
+        query += " AND z.tipo_prenda = ?"
+        parametros.append(filtro_prenda)
+
     # 2.1. Filtro de género
     if filtro_genero != 'Todos':
-        query += " AND z.id IN (SELECT zapato_id FROM zapato_genero WHERE genero = ?)"
+        query += " AND z.id IN (SELECT zapato_id FROM producto_audiencia WHERE genero = ?)"
         parametros.append(filtro_genero)
 
     # 2.2. Filtro por marca
     if filtro_marca != 'Todas':
         query += """
             AND z.id IN (
-                SELECT zm2.zapato_id FROM zapato_marca zm2
+                SELECT zm2.zapato_id FROM producto_marca zm2
                 JOIN marcas m2 ON zm2.marca_id = m2.id
                 WHERE m2.nombre = ?
             )
@@ -142,6 +148,7 @@ def catalogo():
     return render_template('catalogo.html',
         zapatos=lista_zapatos,
         busqueda_actual=busqueda,
+        prenda_actual=filtro_prenda,
         genero_actual=filtro_genero,
         marca_actual=filtro_marca,
         orden_actual=orden_seleccionado,
@@ -156,8 +163,8 @@ def detalle_zapato(id):
     cursor.execute("""
         SELECT z.id, z.nombre, z.imagen,
                GROUP_CONCAT(DISTINCT m.nombre) AS marcas
-        FROM zapatos z
-        LEFT JOIN zapato_marca zm ON z.id = zm.zapato_id
+        FROM productos z
+        LEFT JOIN producto_marca zm ON z.id = zm.zapato_id
         LEFT JOIN marcas m ON zm.marca_id = m.id
         WHERE z.id = ?
         GROUP BY z.id

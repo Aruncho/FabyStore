@@ -886,7 +886,7 @@ nav.nav-hidden {
   opacity: 1;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1320px) {
   .tendencias-bar {
     background: linear-gradient(to bottom, var(--accent) 22%, #000 55%);
     flex-direction: column;

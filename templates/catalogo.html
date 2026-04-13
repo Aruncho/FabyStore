@@ -19,16 +19,29 @@
         <!-- Sidebar de Filtros -->
         <aside class="filters-sidebar">
 
+            <!-- Filtro Prendas -->
+            <div class="filter-group">
+                <h3 class="filter-title">Prendas</h3>
+                <div class="d-flex flex-column gap-2 category-filters">
+                    <a href="{{ url_for('catalogo', prenda='Todas', genero=genero_actual, marca=marca_actual) }}"
+                        class="category-btn {% if prenda_actual == 'Todas' %}active{% endif %}">Todas las prendas</a>
+                    <a href="{{ url_for('catalogo', prenda='Ropa', genero=genero_actual, marca=marca_actual) }}"
+                        class="category-btn {% if prenda_actual == 'Ropa' %}active{% endif %}">Ropa</a>
+                    <a href="{{ url_for('catalogo', prenda='Calzados', genero=genero_actual, marca=marca_actual) }}"
+                        class="category-btn {% if prenda_actual == 'Calzados' %}active{% endif %}">Calzados</a>
+                </div>
+            </div>
+
             <!-- Filtro Categoría -->
             <div class="filter-group">
                 <h3 class="filter-title">Categorías</h3>
 
                 <div class="d-flex flex-column gap-2 category-filters">
-                    <a href="{{ url_for('catalogo', genero='Todos', marca=marca_actual) }}"
+                    <a href="{{ url_for('catalogo', genero='Todos', marca=marca_actual, prenda=prenda_actual) }}"
                         class="category-btn {% if genero_actual == 'Todos' %}active{% endif %}">Todos</a>
-                    <a href="{{ url_for('catalogo', genero='Adultos', marca=marca_actual) }}"
+                    <a href="{{ url_for('catalogo', genero='Adultos', marca=marca_actual, prenda=prenda_actual) }}"
                         class="category-btn {% if genero_actual == 'Adultos' %}active{% endif %}">Adultos</a>
-                    <a href="{{ url_for('catalogo', genero='Niños', marca=marca_actual) }}"
+                    <a href="{{ url_for('catalogo', genero='Niños', marca=marca_actual, prenda=prenda_actual) }}"
                         class="category-btn {% if genero_actual == 'Niños' %}active{% endif %}">Niños</a>
                 </div>
             </div>
@@ -37,10 +50,10 @@
             <div class="filter-group">
                 <h3 class="filter-title">Marcas</h3>
                 <div class="d-flex flex-column gap-2 category-filters">
-                    <a href="{{ url_for('catalogo', marca='Todas', genero=genero_actual) }}"
+                    <a href="{{ url_for('catalogo', marca='Todas', genero=genero_actual, prenda=prenda_actual) }}"
                         class="category-btn {% if marca_actual == 'Todas' %}active{% endif %}">Todas las Marcas</a>
                     {% for marca in marcas %}
-                    <a href="{{ url_for('catalogo', marca=marca, genero=genero_actual) }}"
+                    <a href="{{ url_for('catalogo', marca=marca, genero=genero_actual, prenda=prenda_actual) }}"
                         class="category-btn {% if marca_actual == marca %}active{% endif %}">{{ marca }}</a>
                     {% endfor %}
                 </div>
@@ -82,7 +95,8 @@
 
                 <!-- Producto -->
                 {% if zapatos %}
-                {% for zapato in zapatos %}
+                
+                {% macro render_producto(zapato) %}
                 <article class="product-card" id="tarjeta-{{ zapato.id }}">
                     <div class="product-img-wrapper">
                         {% if zapato.es_destacado == 1 %}
@@ -104,7 +118,60 @@
                         </a>
                     </div>
                 </article>
-                {% endfor %}
+                {% endmacro %}
+
+                {% if prenda_actual == 'Todas' %}
+                    {% set ns = namespace(has_ropa=false, has_calzado=false, has_other=false) %}
+                    
+                    {# -------- ROPA -------- #}
+                    {% for zapato in zapatos %}
+                        {% if zapato['tipo_prenda'] == 'Ropa' %}
+                            {% if not ns.has_ropa %}
+                                <div class="category-divider">
+                                    <h2 class="category-divider-title">ROPA</h2>
+                                    <hr class="category-divider-line">
+                                </div>
+                                {% set ns.has_ropa = true %}
+                            {% endif %}
+                            {{ render_producto(zapato) }}
+                        {% endif %}
+                    {% endfor %}
+
+                    {# -------- CALZADOS -------- #}
+                    {% for zapato in zapatos %}
+                        {% if zapato['tipo_prenda'] == 'Calzados' %}
+                            {% if not ns.has_calzado %}
+                                <div class="category-divider {% if ns.has_ropa %}m-top{% endif %}">
+                                    <h2 class="category-divider-title">CALZADOS</h2>
+                                    <hr class="category-divider-line">
+                                </div>
+                                {% set ns.has_calzado = true %}
+                            {% endif %}
+                            {{ render_producto(zapato) }}
+                        {% endif %}
+                    {% endfor %}
+
+                    {# -------- OTROS (Por si acaso hay productos de otras categorías o nulas) -------- #}
+                    {% for zapato in zapatos %}
+                        {% if zapato['tipo_prenda'] not in ['Ropa', 'Calzados'] %}
+                            {% if not ns.has_other %}
+                                <div class="category-divider {% if ns.has_ropa or ns.has_calzado %}m-top{% endif %}">
+                                    <h2 class="category-divider-title">OTROS</h2>
+                                    <hr class="category-divider-line">
+                                </div>
+                                {% set ns.has_other = true %}
+                            {% endif %}
+                            {{ render_producto(zapato) }}
+                        {% endif %}
+                    {% endfor %}
+                    
+                {% else %}
+                    {# Si NO está activa la vista de "Todas las prendas", mostramos todos los productos normales #}
+                    {% for zapato in zapatos %}
+                        {{ render_producto(zapato) }}
+                    {% endfor %}
+                {% endif %}
+                
                 {% else %}
                 <div class="empty-state-container">
                     <div class="empty-state-icon">

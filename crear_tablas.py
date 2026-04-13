@@ -13,9 +13,10 @@ def init_db():
 
     # Tabla principal de zapatos
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS zapatos (
+        CREATE TABLE IF NOT EXISTS productos (
             id            INTEGER PRIMARY KEY AUTOINCREMENT,
             nombre        TEXT    NOT NULL,
+            tipo_prenda   TEXT    DEFAULT 'Calzados',
             categoria     TEXT    NOT NULL,
             descripcion   TEXT,
             imagen        TEXT    NOT NULL,
@@ -30,11 +31,11 @@ def init_db():
 
     # Tabla puente para géneros (permite multi-género por zapato)
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS zapato_genero (
+        CREATE TABLE IF NOT EXISTS producto_audiencia (
             zapato_id   INTEGER NOT NULL,
             genero      TEXT    NOT NULL,
             PRIMARY KEY (zapato_id, genero),
-            FOREIGN KEY (zapato_id) REFERENCES zapatos(id) ON DELETE CASCADE
+            FOREIGN KEY (zapato_id) REFERENCES productos(id) ON DELETE CASCADE
         )
     ''')
 
@@ -48,11 +49,11 @@ def init_db():
 
     # Tabla puente (un zapato puede tener varias marcas)
     cursor.execute('''
-    CREATE TABLE IF NOT EXISTS zapato_marca (
+    CREATE TABLE IF NOT EXISTS producto_marca (
         zapato_id INTEGER NOT NULL,
         marca_id  INTEGER NOT NULL,
         PRIMARY KEY (zapato_id, marca_id),
-        FOREIGN KEY (zapato_id) REFERENCES zapatos(id) ON DELETE CASCADE,
+        FOREIGN KEY (zapato_id) REFERENCES productos(id) ON DELETE CASCADE,
         FOREIGN KEY (marca_id)  REFERENCES marcas(id)  ON DELETE CASCADE
     );
     ''')
