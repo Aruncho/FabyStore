@@ -532,6 +532,13 @@
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.mobile-filter-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 15px rgba(84, 211, 44, 0.2);
 }
 
 @media (max-width: 992px) {

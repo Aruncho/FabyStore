@@ -12,7 +12,7 @@
 
         <!-- Botón de filtros móvil (Solo visible en pantallas pequeñas) -->
         <button class="mobile-filter-btn"
-            onclick="document.querySelector('.filters-sidebar').classList.toggle('show-filters')">
+            onclick="this.classList.toggle('active'); document.querySelector('.filters-sidebar').classList.toggle('show-filters')">
             Mostrar Filtros
         </button>
 

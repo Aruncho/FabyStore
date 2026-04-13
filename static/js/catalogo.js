@@ -31,14 +31,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalTitle = document.getElementById('modalTitle');
     const modalWhatsApp = document.getElementById('modalWhatsApp');
 
-    document.querySelectorAll('.product-img-wrapper').forEach(wrapper => {
-        wrapper.style.cursor = 'pointer';
-        wrapper.addEventListener('click', function () {
-            const card = this.closest('.product-card');
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', function (e) {
+            // Evitar abrir modal si se hace clic en el botón de "Comprar por WhatsApp"
+            if (e.target.closest('.product-btn')) return;
+
             const img = this.querySelector('.product-img').src;
-            const brand = card.querySelector('.product-brand').innerText;
-            const title = card.querySelector('.product-title').innerText;
-            const btn = card.querySelector('.product-btn');
+            const brand = this.querySelector('.product-brand').innerText;
+            const title = this.querySelector('.product-title').innerText;
+            const btn = this.querySelector('.product-btn');
 
             if (modalImage) modalImage.src = img;
             if (modalBrand) modalBrand.innerText = brand;
@@ -89,10 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const tarjeta = document.getElementById('tarjeta-' + zapatoId);
             if (tarjeta) {
                 tarjeta.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                const imgWrapper = tarjeta.querySelector('.product-img-wrapper');
-                if (imgWrapper) {
-                    imgWrapper.click();
-                }
+                tarjeta.click();
             }
         }, 100);
     }
