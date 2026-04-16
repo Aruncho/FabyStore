@@ -34,55 +34,63 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentShareUrl = '';
 
     if (modalShareBtn) {
-        modalShareBtn.addEventListener('click', async function(e) {
+        modalShareBtn.addEventListener('click', function(e) {
             e.preventDefault();
             if (!currentShareUrl) return;
 
-            const copyToClipboard = async () => {
-                try {
-                    if (navigator.clipboard && navigator.clipboard.writeText) {
-                        await navigator.clipboard.writeText(currentShareUrl);
-                    } else {
-                        throw new Error('Clipboard API not available');
-                    }
-                } catch (e) {
-                    const textArea = document.createElement("textarea");
-                    textArea.value = currentShareUrl;
-                    textArea.style.position = "fixed";
-                    textArea.style.left = "-9999px";
-                    textArea.style.top = "0";
-                    document.body.appendChild(textArea);
-                    textArea.focus();
-                    textArea.select();
-                    try {
-                        document.execCommand('copy');
-                    } catch (err) {
-                        console.error('Fallback error:', err);
-                    }
-                    textArea.remove();
-                }
-
-                // Feedback visual en el botón
+            function showFeedback() {
                 const icon = modalShareBtn.querySelector('i');
                 if (icon) {
-                    const originalClass = icon.className;
+                    const originalClass = icon.className; // guardamos el original
                     icon.className = 'bi bi-check-lg';
-                    setTimeout(() => icon.className = originalClass, 2000);
+                    setTimeout(() => { if (icon.className === 'bi bi-check-lg') icon.className = 'bi bi-share'; }, 2000);
                 }
-            };
-            
-            if (navigator.share) {
+                
+                // Mostrar tooltip (cuadradito encima del botón)
+                let tooltip = document.getElementById('shareTooltip');
+                if (!tooltip) {
+                    tooltip = document.createElement('div');
+                    tooltip.id = 'shareTooltip';
+                    tooltip.className = 'share-tooltip';
+                    tooltip.innerText = 'Enlace copiado';
+                    modalShareBtn.parentElement.appendChild(tooltip);
+                }
+                
+                tooltip.classList.add('show');
+                setTimeout(() => tooltip.classList.remove('show'), 2500);
+            }
+
+            function fallbackCopy() {
+                const textArea = document.createElement("textarea");
+                textArea.value = currentShareUrl;
+                // Prevenir scroll en móviles
+                textArea.style.position = "fixed";
+                textArea.style.left = "-9999px";
+                textArea.style.top = "0";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
                 try {
-                    await navigator.share({
-                        title: modalTitle ? modalTitle.innerText : "Faby's Store",
-                        text: '¡Mira este producto en Faby\'s Store!',
-                        url: currentShareUrl
-                    });
+                    document.execCommand('copy');
+                    showFeedback();
                 } catch (err) {
-                    if (err.name !== 'AbortError') await copyToClipboard();
+                    console.error('Fallback error:', err);
+                    prompt('Tu navegador bloqueó el copiado automático. Por favor, copia el enlace manualmente:', currentShareUrl);
                 }
+                document.body.removeChild(textArea);
+            }
+
+            // Intento 1: API Moderna (solo en HTTPS)
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(currentShareUrl).then(() => {
+                    showFeedback();
+                }).catch(() => {
+                    // Si falla, usar método antiguo
+                    fallbackCopy();
+                });
             } else {
-                await copyToClipboard();
+                // Intento 2: Método antiguo (funciona en http local y navegadores viejos)
+                fallbackCopy();
             }
         });
     }
