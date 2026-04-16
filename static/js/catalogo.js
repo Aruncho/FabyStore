@@ -108,9 +108,9 @@ document.addEventListener("DOMContentLoaded", function () {
             // Extraer ID correctamente de la tarjeta
             const zapatoId = this.id.split('-').pop();
 
-            // Construir URL limpia de compartir
-            const baseUrl = window.location.origin + window.location.pathname;
-            currentShareUrl = `${baseUrl}?ver=${zapatoId}`;
+            // Construir URL limpia de compartir apuntando a la ruta que tiene las etiquetas Open Graph
+            const baseUrl = window.location.origin;
+            currentShareUrl = `${baseUrl}/zapato/${zapatoId}`;
 
             if (modalImage) modalImage.src = img;
             if (modalBrand) modalBrand.innerText = brand;
