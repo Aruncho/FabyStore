@@ -109,8 +109,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const zapatoId = this.id.split('-').pop();
 
             // Construir URL limpia de compartir apuntando a la ruta que tiene las etiquetas Open Graph
+            // Agregamos ?v=1 para obligar a WhatsApp a borrar su caché y leer la foto de nuevo
             const baseUrl = window.location.origin;
-            currentShareUrl = `${baseUrl}/zapato/${zapatoId}`;
+            currentShareUrl = `${baseUrl}/zapato/${zapatoId}?v=1`;
 
             if (modalImage) modalImage.src = img;
             if (modalBrand) modalBrand.innerText = brand;
