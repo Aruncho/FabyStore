@@ -19,8 +19,8 @@
     <meta property="og:description"
         content="{% if zapato.marcas %}{{ zapato.marcas }} · {% endif %}Disponible en Faby's Store. ¡Escríbenos por WhatsApp!">
 
-    <!-- Imagen que se muestra en la preview -->
-    <meta property="og:image" content="{{ zapato.imagen }}">
+    <!-- Imagen que se muestra en la preview (Forzamos JPG para WhatsApp) -->
+    <meta property="og:image" content="{{ zapato.imagen | replace('upload/', 'upload/f_jpg/') }}">
 
     <!-- URL canónica de la página -->
     <meta property="og:url" content="{{ request.url }}">
@@ -34,7 +34,7 @@
     <!-- Para Twitter/X también -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ zapato.nombre }} — Faby's Store">
-    <meta name="twitter:image" content="{{ zapato.imagen }}">
+    <meta name="twitter:image" content="{{ zapato.imagen | replace('upload/', 'upload/f_jpg/') }}">
 
     <title>{{ zapato.nombre }} — Faby's Store</title>
 
