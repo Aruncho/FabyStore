@@ -483,6 +483,7 @@
     border-radius: 2px;
     /* Sincronizado con pmodal-box/btn */
     transition: all 0.3s ease;
+    margin-top: auto;
 }
 
 .product-card:hover .product-btn {
