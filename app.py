@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 import difflib
 import os
@@ -158,6 +158,12 @@ def catalogo():
 # --- RUTA PARA COMPARTIR EN REDES SOCIALES ---
 @app.route('/zapato/<int:id>')
 def detalle_zapato(id):
+    # Detectar si quien entra es un bot de redes sociales o buscador
+    agent = request.headers.get('User-Agent', '').lower()
+    bots = ['whatsapp', 'facebookexternalhit', 'twitterbot', 'telegrambot', 
+            'slackbot', 'discordbot', 'linkedinbot', 'skypeuripreview', 'bot']
+    es_bot = any(b in agent for b in bots)
+
     conexion = obtener_conexion()
     cursor = conexion.cursor()
     cursor.execute("""
@@ -172,7 +178,15 @@ def detalle_zapato(id):
     zapato = cursor.fetchone()
     conexion.close()
 
-    return render_template('compartir_zapato.html', zapato=zapato)
+    if not zapato:
+        return redirect(url_for('catalogo'))
+
+    # Si es un bot, le mostramos la página con las etiquetas (para la foto)
+    if es_bot:
+        return render_template('compartir_zapato.html', zapato=zapato)
+    
+    # Si es una persona real, lo mandamos al instante al catálogo sin pasar por ningún lado
+    return redirect(url_for('catalogo', ver=id))
 
 
 if __name__ == '__main__':
