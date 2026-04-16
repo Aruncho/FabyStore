@@ -30,17 +30,79 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalBrand = document.getElementById('modalBrand');
     const modalTitle = document.getElementById('modalTitle');
     const modalWhatsApp = document.getElementById('modalWhatsApp');
+    const modalShareBtn = document.getElementById('modalShareBtn');
+    let currentShareUrl = '';
+
+    if (modalShareBtn) {
+        modalShareBtn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            if (!currentShareUrl) return;
+
+            const copyToClipboard = async () => {
+                try {
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        await navigator.clipboard.writeText(currentShareUrl);
+                    } else {
+                        throw new Error('Clipboard API not available');
+                    }
+                } catch (e) {
+                    const textArea = document.createElement("textarea");
+                    textArea.value = currentShareUrl;
+                    textArea.style.position = "fixed";
+                    textArea.style.left = "-9999px";
+                    textArea.style.top = "0";
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                    } catch (err) {
+                        console.error('Fallback error:', err);
+                    }
+                    textArea.remove();
+                }
+
+                // Feedback visual en el botón
+                const icon = modalShareBtn.querySelector('i');
+                if (icon) {
+                    const originalClass = icon.className;
+                    icon.className = 'bi bi-check-lg';
+                    setTimeout(() => icon.className = originalClass, 2000);
+                }
+            };
+            
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: modalTitle ? modalTitle.innerText : "Faby's Store",
+                        text: '¡Mira este producto en Faby\'s Store!',
+                        url: currentShareUrl
+                    });
+                } catch (err) {
+                    if (err.name !== 'AbortError') await copyToClipboard();
+                }
+            } else {
+                await copyToClipboard();
+            }
+        });
+    }
 
     document.querySelectorAll('.product-card').forEach(card => {
         card.style.cursor = 'pointer';
         card.addEventListener('click', function (e) {
-            // Evitar abrir modal si se hace clic en el botón de "Comprar por WhatsApp"
             if (e.target.closest('.product-btn')) return;
 
             const img = this.querySelector('.product-img').src;
             const brand = this.querySelector('.product-brand').innerText;
             const title = this.querySelector('.product-title').innerText;
             const btn = this.querySelector('.product-btn');
+            
+            // Extraer ID correctamente de la tarjeta
+            const zapatoId = this.id.split('-').pop();
+
+            // Construir URL limpia de compartir
+            const baseUrl = window.location.origin + window.location.pathname;
+            currentShareUrl = `${baseUrl}?ver=${zapatoId}`;
 
             if (modalImage) modalImage.src = img;
             if (modalBrand) modalBrand.innerText = brand;
