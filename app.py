@@ -24,11 +24,13 @@ def inicio():
     cursor.execute("""
         SELECT z.id, z.nombre, z.imagen, z.es_nuevo, z.destacado AS es_destacado, z.tipo_prenda,
                GROUP_CONCAT(DISTINCT g.genero) AS generos,
-               GROUP_CONCAT(DISTINCT m.nombre) AS marcas
+               GROUP_CONCAT(DISTINCT m.nombre) AS marcas,
+               GROUP_CONCAT(DISTINCT pi.imagen_url) AS galeria
         FROM productos z
         LEFT JOIN producto_audiencia g ON z.id = g.zapato_id
         LEFT JOIN producto_marca zm ON z.id = zm.zapato_id
         LEFT JOIN marcas m ON zm.marca_id = m.id
+        LEFT JOIN producto_imagenes pi ON z.id = pi.producto_id
         WHERE z.activo = 1 AND z.nombre != ''
         GROUP BY z.id
         ORDER BY z.destacado DESC, z.orden DESC, z.fecha_ingreso DESC
@@ -70,11 +72,13 @@ def catalogo():
     query = """
         SELECT z.id, z.nombre, z.imagen, z.es_nuevo, z.destacado AS es_destacado, z.tipo_prenda,
                GROUP_CONCAT(DISTINCT g.genero) AS generos,
-               GROUP_CONCAT(DISTINCT m.nombre) AS marcas
+               GROUP_CONCAT(DISTINCT m.nombre) AS marcas,
+               GROUP_CONCAT(DISTINCT pi.imagen_url) AS galeria
         FROM productos z
         LEFT JOIN producto_audiencia g ON z.id = g.zapato_id
         LEFT JOIN producto_marca zm ON z.id = zm.zapato_id
         LEFT JOIN marcas m ON zm.marca_id = m.id
+        LEFT JOIN producto_imagenes pi ON z.id = pi.producto_id
         WHERE z.activo = 1 AND z.nombre != ''
     """
     parametros = []

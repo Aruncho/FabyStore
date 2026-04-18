@@ -97,7 +97,7 @@
                 {% if zapatos %}
                 
                 {% macro render_producto(zapato) %}
-                <article class="product-card" id="tarjeta-{{ zapato.id }}">
+                <article class="product-card" id="tarjeta-{{ zapato.id }}" data-galeria="{{ zapato.galeria or '' }}">
                     <div class="product-img-wrapper">
                         {% if zapato.es_destacado == 1 %}
                         <span class="product-badge featured-badge">Destacado</span>
@@ -222,7 +222,17 @@
                     <line x1="11" y1="1" x2="1" y2="11" stroke="white" stroke-width="2" stroke-linecap="round" />
                 </svg>
             </span>
-            <img id="modalImage" src="" alt="Producto" class="pmodal-img">
+            
+            <div id="modalCarousel" class="pmodal-carousel">
+                <div class="pmodal-carousel-inner" id="modalCarouselInner">
+                    <!-- Las imagenes se inyectan por JS -->
+                    <img id="modalImage" src="" alt="Producto" class="pmodal-img active">
+                </div>
+                <button class="carousel-control prev" id="carouselPrev">&#10094;</button>
+                <button class="carousel-control next" id="carouselNext">&#10095;</button>
+                <div class="carousel-indicators" id="carouselIndicators"></div>
+            </div>
+
             <div class="pmodal-info">
                 <div class="pmodal-texts">
                     <span id="modalBrand" class="pmodal-brand"></span>

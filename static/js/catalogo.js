@@ -31,6 +31,40 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalTitle = document.getElementById('modalTitle');
     const modalWhatsApp = document.getElementById('modalWhatsApp');
     const modalShareBtn = document.getElementById('modalShareBtn');
+    
+    // Elementos del carrusel
+    const modalCarouselInner = document.getElementById('modalCarouselInner');
+    const carouselPrev = document.getElementById('carouselPrev');
+    const carouselNext = document.getElementById('carouselNext');
+    const carouselIndicators = document.getElementById('carouselIndicators');
+    let carouselImages = [];
+    let currentCarouselIndex = 0;
+
+    function updateCarousel() {
+        if (!modalCarouselInner) return;
+        modalCarouselInner.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
+        
+        if (carouselIndicators) {
+            Array.from(carouselIndicators.children).forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentCarouselIndex);
+            });
+        }
+    }
+
+    if (carouselPrev) {
+        carouselPrev.addEventListener('click', () => {
+            currentCarouselIndex = (currentCarouselIndex > 0) ? currentCarouselIndex - 1 : carouselImages.length - 1;
+            updateCarousel();
+        });
+    }
+
+    if (carouselNext) {
+        carouselNext.addEventListener('click', () => {
+            currentCarouselIndex = (currentCarouselIndex < carouselImages.length - 1) ? currentCarouselIndex + 1 : 0;
+            updateCarousel();
+        });
+    }
+
     let currentShareUrl = '';
 
     if (modalShareBtn) {
@@ -113,7 +147,49 @@ document.addEventListener("DOMContentLoaded", function () {
             const baseUrl = window.location.origin;
             currentShareUrl = `${baseUrl}/zapato/${zapatoId}?v=1`;
 
-            if (modalImage) modalImage.src = img;
+            // Configurar el carrusel o imagen estática
+            const galeriaAttr = this.getAttribute('data-galeria');
+            carouselImages = [img];
+            if (galeriaAttr && galeriaAttr.trim() !== '' && galeriaAttr.trim() !== 'None') {
+                carouselImages = carouselImages.concat(galeriaAttr.split(','));
+            }
+
+            if (modalCarouselInner) {
+                modalCarouselInner.innerHTML = '';
+                if(carouselIndicators) carouselIndicators.innerHTML = '';
+                
+                carouselImages.forEach((src, idx) => {
+                    const imageEl = document.createElement('img');
+                    imageEl.src = src;
+                    imageEl.className = 'pmodal-img';
+                    modalCarouselInner.appendChild(imageEl);
+                    
+                    if (carouselImages.length > 1 && carouselIndicators) {
+                        const dot = document.createElement('div');
+                        dot.className = 'carousel-indicator';
+                        if (idx === 0) dot.classList.add('active');
+                        dot.addEventListener('click', () => {
+                            currentCarouselIndex = idx;
+                            updateCarousel();
+                        });
+                        carouselIndicators.appendChild(dot);
+                    }
+                });
+                
+                currentCarouselIndex = 0;
+                updateCarousel();
+                
+                if (carouselImages.length > 1) {
+                    if(carouselPrev) carouselPrev.style.display = 'block';
+                    if(carouselNext) carouselNext.style.display = 'block';
+                } else {
+                    if(carouselPrev) carouselPrev.style.display = 'none';
+                    if(carouselNext) carouselNext.style.display = 'none';
+                }
+            } else if (modalImage) {
+                modalImage.src = img;
+            }
+
             if (modalBrand) modalBrand.innerText = brand;
             if (modalTitle) modalTitle.innerText = title;
 

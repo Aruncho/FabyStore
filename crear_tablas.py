@@ -58,6 +58,17 @@ def init_db():
     );
     ''')
 
+    # Tabla para múltiples imágenes por producto (Galería)
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS producto_imagenes (
+        id          INTEGER PRIMARY KEY AUTOINCREMENT,
+        producto_id INTEGER NOT NULL,
+        imagen_url  TEXT    NOT NULL,
+        orden       INTEGER DEFAULT 0,
+        FOREIGN KEY (producto_id) REFERENCES productos(id) ON DELETE CASCADE
+    );
+    ''')
+
     conn.commit()
     conn.close()
     print("✅ Base de datos inicializada correctamente.")
