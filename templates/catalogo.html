@@ -3,264 +3,264 @@
 {% block title %}Catálogo - Faby's Store{% endblock %}
 
 {% block extra_css %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/catalogo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/catalogo.css') }}">
 {% endblock %}
 
 {% block content %}
-    <!-- Contenedor Principal Catálogo -->
-    <div class="catalog-page-container">
+<!-- Contenedor Principal Catálogo -->
+<div class="catalog-page-container">
 
-        <!-- Botón de filtros móvil (Solo visible en pantallas pequeñas) -->
-        <button class="mobile-filter-btn"
-            onclick="this.classList.toggle('active'); document.querySelector('.filters-sidebar').classList.toggle('show-filters')">
-            Mostrar Filtros
-        </button>
+    <!-- Botón de filtros móvil (Solo visible en pantallas pequeñas) -->
+    <button class="mobile-filter-btn"
+        onclick="this.classList.toggle('active'); document.querySelector('.filters-sidebar').classList.toggle('show-filters')">
+        Mostrar Filtros
+    </button>
 
-        <!-- Sidebar de Filtros -->
-        <aside class="filters-sidebar">
+    <!-- Sidebar de Filtros -->
+    <aside class="filters-sidebar">
 
-            <!-- Filtro Prendas -->
-            <div class="filter-group">
-                <h3 class="filter-title">Prendas</h3>
-                <div class="d-flex flex-column gap-2 category-filters">
-                    <a href="{{ url_for('catalogo', prenda='Todas', genero=genero_actual, marca=marca_actual) }}"
-                        class="category-btn {% if prenda_actual == 'Todas' %}active{% endif %}">Todas las prendas</a>
-                    <a href="{{ url_for('catalogo', prenda='Ropa', genero=genero_actual, marca=marca_actual) }}"
-                        class="category-btn {% if prenda_actual == 'Ropa' %}active{% endif %}">Ropa</a>
-                    <a href="{{ url_for('catalogo', prenda='Calzados', genero=genero_actual, marca=marca_actual) }}"
-                        class="category-btn {% if prenda_actual == 'Calzados' %}active{% endif %}">Calzados</a>
-                </div>
+        <!-- Filtro Prendas -->
+        <div class="filter-group">
+            <h3 class="filter-title">Prendas</h3>
+            <div class="d-flex flex-column gap-2 category-filters">
+                <a href="{{ url_for('catalogo', prenda='Todas', genero=genero_actual, marca=marca_actual) }}"
+                    class="category-btn {% if prenda_actual == 'Todas' %}active{% endif %}">Todas las prendas</a>
+                <a href="{{ url_for('catalogo', prenda='Ropa', genero=genero_actual, marca=marca_actual) }}"
+                    class="category-btn {% if prenda_actual == 'Ropa' %}active{% endif %}">Ropa</a>
+                <a href="{{ url_for('catalogo', prenda='Calzados', genero=genero_actual, marca=marca_actual) }}"
+                    class="category-btn {% if prenda_actual == 'Calzados' %}active{% endif %}">Calzados</a>
             </div>
+        </div>
 
-            <!-- Filtro Categoría -->
-            <div class="filter-group">
-                <h3 class="filter-title">Categorías</h3>
+        <!-- Filtro Categoría -->
+        <div class="filter-group">
+            <h3 class="filter-title">Categorías</h3>
 
-                <div class="d-flex flex-column gap-2 category-filters">
-                    <a href="{{ url_for('catalogo', genero='Todos', marca=marca_actual, prenda=prenda_actual) }}"
-                        class="category-btn {% if genero_actual == 'Todos' %}active{% endif %}">Todos</a>
-                    <a href="{{ url_for('catalogo', genero='Adultos', marca=marca_actual, prenda=prenda_actual) }}"
-                        class="category-btn {% if genero_actual == 'Adultos' %}active{% endif %}">Adultos</a>
-                    <a href="{{ url_for('catalogo', genero='Niños', marca=marca_actual, prenda=prenda_actual) }}"
-                        class="category-btn {% if genero_actual == 'Niños' %}active{% endif %}">Niños</a>
-                </div>
+            <div class="d-flex flex-column gap-2 category-filters">
+                <a href="{{ url_for('catalogo', genero='Todos', marca=marca_actual, prenda=prenda_actual) }}"
+                    class="category-btn {% if genero_actual == 'Todos' %}active{% endif %}">Todos</a>
+                <a href="{{ url_for('catalogo', genero='Adultos', marca=marca_actual, prenda=prenda_actual) }}"
+                    class="category-btn {% if genero_actual == 'Adultos' %}active{% endif %}">Adultos</a>
+                <a href="{{ url_for('catalogo', genero='Niños', marca=marca_actual, prenda=prenda_actual) }}"
+                    class="category-btn {% if genero_actual == 'Niños' %}active{% endif %}">Niños</a>
             </div>
+        </div>
 
-            <!-- Filtro Marcas -->
-            <div class="filter-group">
-                <h3 class="filter-title">Marcas</h3>
-                <div class="d-flex flex-column gap-2 category-filters">
-                    <a href="{{ url_for('catalogo', marca='Todas', genero=genero_actual, prenda=prenda_actual) }}"
-                        class="category-btn {% if marca_actual == 'Todas' %}active{% endif %}">Todas las Marcas</a>
-                    {% for marca in marcas %}
-                    <a href="{{ url_for('catalogo', marca=marca, genero=genero_actual, prenda=prenda_actual) }}"
-                        class="category-btn {% if marca_actual == marca %}active{% endif %}">{{ marca }}</a>
-                    {% endfor %}
-                </div>
+        <!-- Filtro Marcas -->
+        <div class="filter-group">
+            <h3 class="filter-title">Marcas</h3>
+            <div class="d-flex flex-column gap-2 category-filters">
+                <a href="{{ url_for('catalogo', marca='Todas', genero=genero_actual, prenda=prenda_actual) }}"
+                    class="category-btn {% if marca_actual == 'Todas' %}active{% endif %}">Todas las Marcas</a>
+                {% for marca in marcas %}
+                <a href="{{ url_for('catalogo', marca=marca, genero=genero_actual, prenda=prenda_actual) }}"
+                    class="category-btn {% if marca_actual == marca %}active{% endif %}">{{ marca }}</a>
+                {% endfor %}
             </div>
-        </aside>
+        </div>
+    </aside>
 
-        <!-- Grid de Productos -->
-        <main class="products-grid-container">
+    <!-- Grid de Productos -->
+    <main class="products-grid-container">
 
-            <!-- Toolbar (Contador y Ordenar) -->
-            <div class="products-toolbar">
-                <span class="products-count">Mostrando {{ zapatos|length }} productos</span>
-                <div class="custom-select-wrapper" id="sortDropdown">
-                    <button class="custom-select-btn" onclick="toggleSortDropdown(event)">
-                        <span id="sortLabel">
-                            {% if orden_actual == 'nuevo' %}Más nuevo
-                            {% elif orden_actual == 'antiguo' %}Más antiguo
-                            {% else %}Destacados{% endif %}
-                        </span>
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
-                            stroke-width="2.5">
-                            <polyline points="6 9 12 15 18 9" />
-                        </svg>
-                    </button>
-                    <div class="custom-select-options" id="sortOptions">
-                        <button onclick="actualizarOrden('destacados')"
-                            class="custom-option {% if orden_actual == 'destacados' %}active{% endif %}">Destacados</button>
-                        <button onclick="actualizarOrden('nuevo')"
-                            class="custom-option {% if orden_actual == 'nuevo' %}active{% endif %}">Más nuevo</button>
-                        <button onclick="actualizarOrden('antiguo')"
-                            class="custom-option {% if orden_actual == 'antiguo' %}active{% endif %}">Más
-                            antiguo</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Productos -->
-            <div class="products-grid">
-
-                <!-- Producto -->
-                {% if zapatos %}
-                
-                {% macro render_producto(zapato) %}
-                <article class="product-card" id="tarjeta-{{ zapato.id }}" data-galeria="{{ zapato.galeria or '' }}">
-                    <div class="product-img-wrapper">
-                        {% if zapato.es_destacado == 1 %}
-                        <span class="product-badge featured-badge">Destacado</span>
-                        {% endif %}
-                        {% if zapato.es_nuevo == 1 %}
-                        <span class="product-badge new-badge">Lo Nuevo</span>
-                        {% endif %}
-                        <img src="{{ zapato.imagen }}" loading="lazy" alt="{{ zapato.nombre }}" class="product-img">
-                    </div>
-
-                    <div class="product-info">
-                        <span class="product-brand">{{ (zapato.marcas or '')|replace(',', ' / ') }}</span>
-                        <h3 class="product-title">{{ zapato.nombre }}</h3>
-
-                        <a href="https://wa.me/584141877974?text=Hola,%20me%20interesan%20los%20{{ zapato.nombre | urlencode }}%0A%0A{{ request.host_url }}zapato/{{ zapato.id }}"
-                            class="product-btn" target="_blank">
-                            Comprar por WhatsApp
-                        </a>
-                    </div>
-                </article>
-                {% endmacro %}
-
-                {% if prenda_actual == 'Todas' %}
-                    {% set ns = namespace(has_ropa=false, has_calzado=false, has_other=false) %}
-                    
-                    {# -------- ROPA -------- #}
-                    {% for zapato in zapatos %}
-                        {% if zapato['tipo_prenda'] == 'Ropa' %}
-                            {% if not ns.has_ropa %}
-                                <div class="category-divider">
-                                    <h2 class="category-divider-title">ROPA</h2>
-                                    <hr class="category-divider-line">
-                                </div>
-                                {% set ns.has_ropa = true %}
-                            {% endif %}
-                            {{ render_producto(zapato) }}
-                        {% endif %}
-                    {% endfor %}
-
-                    {# -------- CALZADOS -------- #}
-                    {% for zapato in zapatos %}
-                        {% if zapato['tipo_prenda'] == 'Calzados' %}
-                            {% if not ns.has_calzado %}
-                                <div class="category-divider {% if ns.has_ropa %}m-top{% endif %}">
-                                    <h2 class="category-divider-title">CALZADOS</h2>
-                                    <hr class="category-divider-line">
-                                </div>
-                                {% set ns.has_calzado = true %}
-                            {% endif %}
-                            {{ render_producto(zapato) }}
-                        {% endif %}
-                    {% endfor %}
-
-                    {# -------- OTROS (Por si acaso hay productos de otras categorías o nulas) -------- #}
-                    {% for zapato in zapatos %}
-                        {% if zapato['tipo_prenda'] not in ['Ropa', 'Calzados'] %}
-                            {% if not ns.has_other %}
-                                <div class="category-divider {% if ns.has_ropa or ns.has_calzado %}m-top{% endif %}">
-                                    <h2 class="category-divider-title">OTROS</h2>
-                                    <hr class="category-divider-line">
-                                </div>
-                                {% set ns.has_other = true %}
-                            {% endif %}
-                            {{ render_producto(zapato) }}
-                        {% endif %}
-                    {% endfor %}
-                    
-                {% else %}
-                    {# Si NO está activa la vista de "Todas las prendas", mostramos todos los productos normales #}
-                    {% for zapato in zapatos %}
-                        {{ render_producto(zapato) }}
-                    {% endfor %}
-                {% endif %}
-                
-                {% else %}
-                <div class="empty-state-container">
-                    <div class="empty-state-icon">
-                        <svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1000 766.11">
-                            <path fill="currentColor"
-                                d="M992.39,357.55L802.16,28.08C792.01,10.5,773.83,0,753.53,0h0c-20.3,0-38.48,10.5-48.64,28.08l-80.39,139.25c44.76,50.31,71.97,116.59,71.97,189.22,0,29.69-4.55,58.32-12.98,85.24h260.27c20.3,0,38.48-10.5,48.63-28.08,10.15-17.58,10.15-38.58,0-56.16ZM773.56,367.89c-5.42,5.42-12.06,8.13-19.92,8.13s-14.5-2.71-19.92-8.13c-5.42-5.42-8.13-12.06-8.13-19.92s2.71-14.5,8.13-19.92c5.42-5.42,12.06-8.13,19.92-8.13s14.5,2.71,19.92,8.13c5.42,5.42,8.13,12.06,8.13,19.92s-2.71,14.51-8.13,19.92ZM788.54,158.59l-15.45,129.17c-1.18,9.91-9.59,17.37-19.57,17.37s-18.4-7.48-19.57-17.4l-15.24-129.19c-2.47-20.91,13.87-39.28,34.92-39.28s37.41,18.41,34.91,39.33Z" />
-                            <g>
-                                <path fill="currentColor"
-                                    d="M259.41,343.53c-.79,0-1.59-.06-2.4-.19-8.13-1.32-13.65-8.97-12.34-17.1,6.32-39.03,26.4-74.79,56.55-100.69,30.48-26.18,69.43-40.6,109.66-40.6,8.24,0,14.91,6.68,14.91,14.91s-6.68,14.91-14.91,14.91c-33.11,0-65.15,11.86-90.23,33.4-24.82,21.32-41.35,50.73-46.54,82.83-1.19,7.32-7.52,12.53-14.7,12.53Z" />
-                                <path fill="currentColor"
-                                    d="M634.85,260.61c-12.24-28.95-29.77-54.95-52.08-77.26-22.32-22.32-48.32-39.84-77.26-52.08-29.99-12.69-61.82-19.12-94.63-19.12s-64.64,6.44-94.63,19.12c-28.95,12.24-54.94,29.76-77.26,52.08-22.31,22.31-39.84,48.31-52.08,77.26-12.69,29.99-19.11,61.82-19.11,94.63s6.42,64.64,19.11,94.62c7.83,18.54,17.85,35.86,29.89,51.78l.06.07c1.2,1.54,20.9,26.36,47.62,47.61,15.92,12.04,33.23,22.05,51.77,29.89,29.99,12.68,61.82,19.11,94.63,19.11s64.64-6.44,94.63-19.11c28.94-12.25,54.94-29.77,77.26-52.08,22.31-22.32,39.84-48.32,52.08-77.27,12.69-29.97,19.11-61.82,19.11-94.62s-6.42-64.64-19.11-94.63ZM589.93,430.85c-9.79,23.14-23.79,43.92-41.65,61.77-17.85,17.85-38.64,31.87-61.77,41.65-23.93,10.13-49.37,15.26-75.62,15.26s-51.69-5.13-75.63-15.26c-23.13-9.79-43.91-23.8-61.76-41.65-17.86-17.85-31.88-38.64-41.66-61.77-10.12-23.94-15.26-49.38-15.26-75.62s5.14-51.69,15.26-75.63c9.79-23.14,23.8-43.92,41.66-61.77,17.85-17.85,38.64-31.87,61.76-41.65,23.94-10.12,49.38-15.26,75.63-15.26s51.69,5.14,75.62,15.26c23.14,9.79,43.92,23.8,61.77,41.65,17.86,17.85,31.87,38.64,41.65,61.77,10.13,23.94,15.27,49.38,15.27,75.63s-5.14,51.68-15.27,75.62Z" />
-                                <path fill="currentColor"
-                                    d="M246.36,567.43l-188.81,188.81c-13.17,13.17-34.52,13.17-47.69,0-13.16-13.17-13.16-34.52,0-47.67l188.82-188.81.06.07c1.2,1.54,20.9,26.36,47.62,47.61Z" />
-                            </g>
-                        </svg>
-                    </div>
-                    <h2 class="empty-state-title">UPS... NADA POR AQUÍ</h2>
-                    <p class="empty-state-text">No encontramos ningún zapato que coincida con "<strong>{{
-                            busqueda_actual }}</strong>".</p>
-                    <p class="empty-state-subtext">Intenta buscar con otros términos o explora nuestro catálogo
-                        completo.</p>
-                    <p class="empty-state-subtext-2" style="margin-top: 10px;">Si desea pedir algún zapato en específico
-                        encárguelo con nosotros vía WhatsApp también</p>
-
-                    <div class="empty-state-actions">
-                        <a href="{{ url_for('catalogo') }}" class="btn-whatsapp empty-state-btn">VER TODO EL
-                            CATÁLOGO</a>
-                        <a href="https://wa.me/584120000000?text=Hola,%20deseo%20encargar%20un%20zapato%20en%20espec%C3%ADfico"
-                            class="empty-state-whatsapp-square" target="_blank" title="Encargar por WhatsApp">
-                            <i class="bi bi-whatsapp"></i>
-                        </a>
-                    </div>
-                </div>
-                {% endif %}
-
-
-            </div>
-
-        </main>
-    </div>
-
-    <!-- Modal de Producto -->
-    <div id="productModal" class="pmodal">
-        <div class="pmodal-box">
-            <span class="pmodal-close">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="1" y1="1" x2="11" y2="11" stroke="white" stroke-width="2" stroke-linecap="round" />
-                    <line x1="11" y1="1" x2="1" y2="11" stroke="white" stroke-width="2" stroke-linecap="round" />
-                </svg>
-            </span>
-            
-            <div id="modalCarousel" class="pmodal-carousel">
-                <div class="pmodal-carousel-inner" id="modalCarouselInner">
-                    <!-- Las imagenes se inyectan por JS -->
-                    <img id="modalImage" src="" alt="Producto" class="pmodal-img active">
-                </div>
-                <button class="carousel-control prev" id="carouselPrev">&#10094;</button>
-                <button class="carousel-control next" id="carouselNext">&#10095;</button>
-                <div class="carousel-indicators" id="carouselIndicators"></div>
-            </div>
-
-            <div class="pmodal-info">
-                <div class="pmodal-texts">
-                    <span id="modalBrand" class="pmodal-brand"></span>
-                    <h3 id="modalTitle" class="pmodal-title"></h3>
-                </div>
-                <!-- Por defecto vacio o #, se llena con JS -->
-                <div class="pmodal-actions">
-                    <a id="modalWhatsApp" href="#" class="pmodal-btn" target="_blank">
-                        Comprar por WhatsApp
-                    </a>
-                    <button id="modalShareBtn" class="pmodal-share-btn" title="Compartir producto">
-                        <i class="bi bi-share"></i>
-                    </button>
+        <!-- Toolbar (Contador y Ordenar) -->
+        <div class="products-toolbar">
+            <span class="products-count">Mostrando {{ zapatos|length }} productos</span>
+            <div class="custom-select-wrapper" id="sortDropdown">
+                <button class="custom-select-btn" onclick="toggleSortDropdown(event)">
+                    <span id="sortLabel">
+                        {% if orden_actual == 'nuevo' %}Más nuevo
+                        {% elif orden_actual == 'antiguo' %}Más antiguo
+                        {% else %}Destacados{% endif %}
+                    </span>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                </button>
+                <div class="custom-select-options" id="sortOptions">
+                    <button onclick="actualizarOrden('destacados')"
+                        class="custom-option {% if orden_actual == 'destacados' %}active{% endif %}">Destacados</button>
+                    <button onclick="actualizarOrden('nuevo')"
+                        class="custom-option {% if orden_actual == 'nuevo' %}active{% endif %}">Más nuevo</button>
+                    <button onclick="actualizarOrden('antiguo')"
+                        class="custom-option {% if orden_actual == 'antiguo' %}active{% endif %}">Más
+                        antiguo</button>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Scroll al tope -->
-    <button id="scrollTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <line x1="8" y1="13" x2="8" y2="3" stroke="white" stroke-width="2" stroke-linecap="round" />
-            <polyline points="3,8 8,3 13,8" stroke="white" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" fill="none" />
-        </svg>
-    </button>
+        <!-- Productos -->
+        <div class="products-grid">
+
+            <!-- Producto -->
+            {% if zapatos %}
+
+            {% macro render_producto(zapato) %}
+            <article class="product-card" id="tarjeta-{{ zapato.id }}" data-galeria="{{ zapato.galeria or '' }}">
+                <div class="product-img-wrapper">
+                    {% if zapato.es_destacado == 1 %}
+                    <span class="product-badge featured-badge">Destacado</span>
+                    {% endif %}
+                    {% if zapato.es_nuevo == 1 %}
+                    <span class="product-badge new-badge">Nuevo</span>
+                    {% endif %}
+                    <img src="{{ zapato.imagen }}" loading="lazy" alt="{{ zapato.nombre }}" class="product-img">
+                </div>
+
+                <div class="product-info">
+                    <span class="product-brand">{{ (zapato.marcas or '')|replace(',', ' / ') }}</span>
+                    <h3 class="product-title">{{ zapato.nombre }}</h3>
+
+                    <a href="https://wa.me/584141877974?text=Hola,%20me%20interesan%20los%20{{ zapato.nombre | urlencode }}%0A%0A{{ request.host_url }}zapato/{{ zapato.id }}"
+                        class="product-btn" target="_blank">
+                        Comprar por WhatsApp
+                    </a>
+                </div>
+            </article>
+            {% endmacro %}
+
+            {% if prenda_actual == 'Todas' %}
+            {% set ns = namespace(has_ropa=false, has_calzado=false, has_other=false) %}
+
+            {# -------- ROPA -------- #}
+            {% for zapato in zapatos %}
+            {% if zapato['tipo_prenda'] == 'Ropa' %}
+            {% if not ns.has_ropa %}
+            <div class="category-divider">
+                <h2 class="category-divider-title">ROPA</h2>
+                <hr class="category-divider-line">
+            </div>
+            {% set ns.has_ropa = true %}
+            {% endif %}
+            {{ render_producto(zapato) }}
+            {% endif %}
+            {% endfor %}
+
+            {# -------- CALZADOS -------- #}
+            {% for zapato in zapatos %}
+            {% if zapato['tipo_prenda'] == 'Calzados' %}
+            {% if not ns.has_calzado %}
+            <div class="category-divider {% if ns.has_ropa %}m-top{% endif %}">
+                <h2 class="category-divider-title">CALZADOS</h2>
+                <hr class="category-divider-line">
+            </div>
+            {% set ns.has_calzado = true %}
+            {% endif %}
+            {{ render_producto(zapato) }}
+            {% endif %}
+            {% endfor %}
+
+            {# -------- OTROS (Por si acaso hay productos de otras categorías o nulas) -------- #}
+            {% for zapato in zapatos %}
+            {% if zapato['tipo_prenda'] not in ['Ropa', 'Calzados'] %}
+            {% if not ns.has_other %}
+            <div class="category-divider {% if ns.has_ropa or ns.has_calzado %}m-top{% endif %}">
+                <h2 class="category-divider-title">OTROS</h2>
+                <hr class="category-divider-line">
+            </div>
+            {% set ns.has_other = true %}
+            {% endif %}
+            {{ render_producto(zapato) }}
+            {% endif %}
+            {% endfor %}
+
+            {% else %}
+            {# Si NO está activa la vista de "Todas las prendas", mostramos todos los productos normales #}
+            {% for zapato in zapatos %}
+            {{ render_producto(zapato) }}
+            {% endfor %}
+            {% endif %}
+
+            {% else %}
+            <div class="empty-state-container">
+                <div class="empty-state-icon">
+                    <svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1000 766.11">
+                        <path fill="currentColor"
+                            d="M992.39,357.55L802.16,28.08C792.01,10.5,773.83,0,753.53,0h0c-20.3,0-38.48,10.5-48.64,28.08l-80.39,139.25c44.76,50.31,71.97,116.59,71.97,189.22,0,29.69-4.55,58.32-12.98,85.24h260.27c20.3,0,38.48-10.5,48.63-28.08,10.15-17.58,10.15-38.58,0-56.16ZM773.56,367.89c-5.42,5.42-12.06,8.13-19.92,8.13s-14.5-2.71-19.92-8.13c-5.42-5.42-8.13-12.06-8.13-19.92s2.71-14.5,8.13-19.92c5.42-5.42,12.06-8.13,19.92-8.13s14.5,2.71,19.92,8.13c5.42,5.42,8.13,12.06,8.13,19.92s-2.71,14.51-8.13,19.92ZM788.54,158.59l-15.45,129.17c-1.18,9.91-9.59,17.37-19.57,17.37s-18.4-7.48-19.57-17.4l-15.24-129.19c-2.47-20.91,13.87-39.28,34.92-39.28s37.41,18.41,34.91,39.33Z" />
+                        <g>
+                            <path fill="currentColor"
+                                d="M259.41,343.53c-.79,0-1.59-.06-2.4-.19-8.13-1.32-13.65-8.97-12.34-17.1,6.32-39.03,26.4-74.79,56.55-100.69,30.48-26.18,69.43-40.6,109.66-40.6,8.24,0,14.91,6.68,14.91,14.91s-6.68,14.91-14.91,14.91c-33.11,0-65.15,11.86-90.23,33.4-24.82,21.32-41.35,50.73-46.54,82.83-1.19,7.32-7.52,12.53-14.7,12.53Z" />
+                            <path fill="currentColor"
+                                d="M634.85,260.61c-12.24-28.95-29.77-54.95-52.08-77.26-22.32-22.32-48.32-39.84-77.26-52.08-29.99-12.69-61.82-19.12-94.63-19.12s-64.64,6.44-94.63,19.12c-28.95,12.24-54.94,29.76-77.26,52.08-22.31,22.31-39.84,48.31-52.08,77.26-12.69,29.99-19.11,61.82-19.11,94.63s6.42,64.64,19.11,94.62c7.83,18.54,17.85,35.86,29.89,51.78l.06.07c1.2,1.54,20.9,26.36,47.62,47.61,15.92,12.04,33.23,22.05,51.77,29.89,29.99,12.68,61.82,19.11,94.63,19.11s64.64-6.44,94.63-19.11c28.94-12.25,54.94-29.77,77.26-52.08,22.31-22.32,39.84-48.32,52.08-77.27,12.69-29.97,19.11-61.82,19.11-94.62s-6.42-64.64-19.11-94.63ZM589.93,430.85c-9.79,23.14-23.79,43.92-41.65,61.77-17.85,17.85-38.64,31.87-61.77,41.65-23.93,10.13-49.37,15.26-75.62,15.26s-51.69-5.13-75.63-15.26c-23.13-9.79-43.91-23.8-61.76-41.65-17.86-17.85-31.88-38.64-41.66-61.77-10.12-23.94-15.26-49.38-15.26-75.62s5.14-51.69,15.26-75.63c9.79-23.14,23.8-43.92,41.66-61.77,17.85-17.85,38.64-31.87,61.76-41.65,23.94-10.12,49.38-15.26,75.63-15.26s51.69,5.14,75.62,15.26c23.14,9.79,43.92,23.8,61.77,41.65,17.86,17.85,31.87,38.64,41.65,61.77,10.13,23.94,15.27,49.38,15.27,75.63s-5.14,51.68-15.27,75.62Z" />
+                            <path fill="currentColor"
+                                d="M246.36,567.43l-188.81,188.81c-13.17,13.17-34.52,13.17-47.69,0-13.16-13.17-13.16-34.52,0-47.67l188.82-188.81.06.07c1.2,1.54,20.9,26.36,47.62,47.61Z" />
+                        </g>
+                    </svg>
+                </div>
+                <h2 class="empty-state-title">UPS... NADA POR AQUÍ</h2>
+                <p class="empty-state-text">No encontramos ningún zapato que coincida con "<strong>{{
+                        busqueda_actual }}</strong>".</p>
+                <p class="empty-state-subtext">Intenta buscar con otros términos o explora nuestro catálogo
+                    completo.</p>
+                <p class="empty-state-subtext-2" style="margin-top: 10px;">Si desea pedir algún zapato en específico
+                    encárguelo con nosotros vía WhatsApp también</p>
+
+                <div class="empty-state-actions">
+                    <a href="{{ url_for('catalogo') }}" class="btn-whatsapp empty-state-btn">VER TODO EL
+                        CATÁLOGO</a>
+                    <a href="https://wa.me/584120000000?text=Hola,%20deseo%20encargar%20un%20zapato%20en%20espec%C3%ADfico"
+                        class="empty-state-whatsapp-square" target="_blank" title="Encargar por WhatsApp">
+                        <i class="bi bi-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+
+
+        </div>
+
+    </main>
+</div>
+
+<!-- Modal de Producto -->
+<div id="productModal" class="pmodal">
+    <div class="pmodal-box">
+        <span class="pmodal-close">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="1" y1="1" x2="11" y2="11" stroke="white" stroke-width="2" stroke-linecap="round" />
+                <line x1="11" y1="1" x2="1" y2="11" stroke="white" stroke-width="2" stroke-linecap="round" />
+            </svg>
+        </span>
+
+        <div id="modalCarousel" class="pmodal-carousel">
+            <div class="pmodal-carousel-inner" id="modalCarouselInner">
+                <!-- Las imagenes se inyectan por JS -->
+                <img id="modalImage" src="" alt="Producto" class="pmodal-img active">
+            </div>
+            <button class="carousel-control prev" id="carouselPrev">&#10094;</button>
+            <button class="carousel-control next" id="carouselNext">&#10095;</button>
+            <div class="carousel-indicators" id="carouselIndicators"></div>
+        </div>
+
+        <div class="pmodal-info">
+            <div class="pmodal-texts">
+                <span id="modalBrand" class="pmodal-brand"></span>
+                <h3 id="modalTitle" class="pmodal-title"></h3>
+            </div>
+            <!-- Por defecto vacio o #, se llena con JS -->
+            <div class="pmodal-actions">
+                <a id="modalWhatsApp" href="#" class="pmodal-btn" target="_blank">
+                    Comprar por WhatsApp
+                </a>
+                <button id="modalShareBtn" class="pmodal-share-btn" title="Compartir producto">
+                    <i class="bi bi-share"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scroll al tope -->
+<button id="scrollTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <line x1="8" y1="13" x2="8" y2="3" stroke="white" stroke-width="2" stroke-linecap="round" />
+        <polyline points="3,8 8,3 13,8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            fill="none" />
+    </svg>
+</button>
 {% endblock %}
 
 {% block extra_js %}
-    <script src="{{ url_for('static', filename='js/catalogo.js') }}"></script>
+<script src="{{ url_for('static', filename='js/catalogo.js') }}"></script>
 {% endblock %}
